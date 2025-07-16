@@ -8,7 +8,8 @@ public class PlayerMovement : MonoBehaviour
 	Vector3 Movement;
 	[SerializeField] Transform GroundCheckObject;
 	[SerializeField] LayerMask GroundLayer;
-	
+
+	public Vector2 movement;
 
 	public float JumpForce;
 
@@ -29,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		bool IsGrounded = Physics.CheckBox(GroundCheckObject.position, new Vector3(1, 1, 1), Quaternion.identity, GroundLayer);
+		bool IsGrounded = Physics.CheckBox(GroundCheckObject.position, new Vector3(1, 0.3f, 1), Quaternion.identity, GroundLayer);
 		Input();
 		Movement.Normalize();
 
@@ -53,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
 	
 	void Input()
 	{
-		var movement = MoveAction.ReadValue<Vector2>();
+		movement = MoveAction.ReadValue<Vector2>();
 		Movement = new Vector3(movement.x,0,movement.y);
 	}
 }
