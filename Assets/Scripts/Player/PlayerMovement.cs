@@ -1,4 +1,3 @@
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,16 +8,19 @@ public class PlayerMovement : MonoBehaviour
 	[SerializeField] Transform GroundCheckObject;
 	[SerializeField] LayerMask GroundLayer;
 
-	public Vector2 movement;
+	Vector2 movement;
 
 	public float JumpForce;
 
 	public float speed;
-	
+
 	[Header("Input")]
 	public InputAction MoveAction;
 	public InputAction JumpAction;
-	
+
+	[Header("Animaition Stuff")]
+	public Vector2 AnimInput;
+
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start()
 	{
@@ -35,26 +37,40 @@ public class PlayerMovement : MonoBehaviour
 		Movement.Normalize();
 
 		Vector3 targetVelocity = Movement * speed;
-		
+
 		Vector3 velocity = rb.linearVelocity;
 		velocity.x = targetVelocity.x;
-		velocity.z = targetVelocity.z *1.414214f;
+		velocity.z = targetVelocity.z;
 		rb.linearVelocity = velocity;
-		
+
 		// if (Movement ==)
 		// {
 		// 	rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
 		// }
-		
-		if(JumpAction.WasPressedThisFrame() && IsGrounded)
+
+		if (JumpAction.WasPressedThisFrame() && IsGrounded)
 		{
-			rb.linearVelocity = new Vector3(rb.linearVelocity.x, JumpForce * 1.414214f, rb.linearVelocity.z);
+			rb.linearVelocity = new Vector3(rb.linearVelocity.x, JumpForce, rb.linearVelocity.z);
 		}
 	}
-	
+
 	void Input()
 	{
 		movement = MoveAction.ReadValue<Vector2>();
-		Movement = new Vector3(movement.x,0,movement.y);
+		if (Mathf.Abs(movement.x) > Mathf.Abs(movement.y))
+		{
+			Debug.Log("x first");
+			AnimInput = new Vector2(movement.x, movement.y * 0.5f);
+		}
+		else if (Mathf.Abs(movement.x) < Mathf.Abs(movement.y))
+		{
+			Debug.Log("Y first");
+			AnimInput = new Vector2(movement.x * 0.5f, movement.y);
+		}
+		if((AnimInput.x * movement.x < 0)||(AnimInput.y * movement.y < 0))
+		{
+			AnimInput = new Vector2(movement.x * 0.5f, movement.y);
+		}
+		Movement = new Vector3(movement.x, 0, movement.y);
 	}
 }

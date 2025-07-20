@@ -4,9 +4,8 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - Tile Mesh
-  - Rule Tile
-  - Grid
+  - Throwable
+  - Interactable
   layers:
   - Default
   - TransparentFX

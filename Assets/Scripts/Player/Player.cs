@@ -19,12 +19,12 @@ public class Player : MonoBehaviour
 	
 	void Animation()
 	{
-		if(PM.movement != Vector2.zero)
+		if(PM.AnimInput != Vector2.zero)
 		{
-			anim.SetFloat("MoveX", PM.movement.x);
-			anim.SetFloat("MoveY", PM.movement.y);
+			anim.SetFloat("MoveX", PM.AnimInput.x);
+			anim.SetFloat("MoveY", PM.AnimInput.y);
 		}
-		anim.SetBool("IsMoving", PM.movement != Vector2.zero);
+		anim.SetBool("IsMoving", PM.AnimInput != Vector2.zero);
 		// TEST
 
 		
