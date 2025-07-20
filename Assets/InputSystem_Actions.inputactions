@@ -166,6 +166,17 @@
                 },
                 {
                     "name": "",
+                    "id": "658087b5-903c-4198-9a1b-65578676edc8",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "ae711333-859b-488a-8b30-a399c0a13234",
                     "path": "<Keyboard>/x",
                     "interactions": "",
@@ -177,11 +188,33 @@
                 },
                 {
                     "name": "",
+                    "id": "c35aa38c-18bd-4613-b620-13b802b68bbe",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "8dd664fb-2961-455b-94ac-e735bb9f12e5",
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d29554b6-388b-4453-834d-e48ff0506bf8",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
                     "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
