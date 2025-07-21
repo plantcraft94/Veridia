@@ -26,7 +26,6 @@ public class ThrowableObject : MonoBehaviour
 		{
 			transform.position = new Vector3(Player.position.x, Player.position.y + 1, Player.position.z);
 			coll.enabled = false;
-			rb.isKinematic = true;
 		}
 		else if(Grabbed == 2)
 		{
@@ -40,7 +39,7 @@ public class ThrowableObject : MonoBehaviour
 	{
 		if(collision.gameObject.layer == 6)
 		{
-			rb.linearVelocity = Vector3.zero;
+			rb.isKinematic = true;
 		}
 	}
 }

@@ -103,7 +103,7 @@
                     "id": "4c9a6320-230c-47e7-9857-dc4a0111f778",
                     "path": "2DVector(mode=2)",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "StickDeadzone",
                     "groups": "",
                     "action": "Move",
                     "isComposite": true,

@@ -43,11 +43,6 @@ public class PlayerMovement : MonoBehaviour
 		velocity.z = targetVelocity.z;
 		rb.linearVelocity = velocity;
 
-		// if (Movement ==)
-		// {
-		// 	rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
-		// }
-
 		if (JumpAction.WasPressedThisFrame() && IsGrounded)
 		{
 			rb.linearVelocity = new Vector3(rb.linearVelocity.x, JumpForce, rb.linearVelocity.z);
@@ -67,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
 			Debug.Log("Y first");
 			AnimInput = new Vector2(movement.x * 0.5f, movement.y);
 		}
-		if((AnimInput.x * movement.x < 0)||(AnimInput.y * movement.y < 0))
+		if ((AnimInput.x * movement.x < 0) || (AnimInput.y * movement.y < 0))
 		{
 			AnimInput = new Vector2(movement.x * 0.5f, movement.y);
 		}

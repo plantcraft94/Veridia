@@ -18,7 +18,7 @@ public class PlayerInteract : MonoBehaviour
 	}
 	private void Update()
 	{
-		Interacter.transform.position = new Vector3(transform.position.x + 0.5f * PM.AnimInput.x, transform.position.y, transform.position.z + 0.5f * PM.AnimInput.y);
+		RotateBasedOnDirection(PM.AnimInput);
 		if (IsHolding && interactAction.WasPressedThisFrame())
 		{
 			TO.Grabbed = 2;
@@ -41,5 +41,13 @@ public class PlayerInteract : MonoBehaviour
 				IsHolding = true;
 			}
 		}
+	}
+	void RotateBasedOnDirection(Vector2 direction)
+	{
+		if (direction == Vector2.zero) return;
+
+		float angle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
+
+		Interacter.transform.rotation = Quaternion.AngleAxis(angle, Vector3.up);
 	}
 }
