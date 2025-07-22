@@ -7,7 +7,6 @@ public class ThrowableObject : MonoBehaviour
 	Transform Player;
 	Collider coll;
 	Rigidbody rb;
-	Vector3 direction;
 	
 	PlayerMovement PM;
 	
@@ -40,11 +39,7 @@ public class ThrowableObject : MonoBehaviour
 	{
 		if(collision.gameObject.layer == 6)
 		{
-			direction = collision.GetContact(0).normal;
-			if(direction.y == 1)
-			{
-				rb.isKinematic = true;
-			}
+			rb.isKinematic = true;
 		}
 	}
 }
