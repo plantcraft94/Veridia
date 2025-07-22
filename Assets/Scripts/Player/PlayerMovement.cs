@@ -54,12 +54,10 @@ public class PlayerMovement : MonoBehaviour
 		movement = MoveAction.ReadValue<Vector2>();
 		if (Mathf.Abs(movement.x) > Mathf.Abs(movement.y))
 		{
-			Debug.Log("x first");
 			AnimInput = new Vector2(movement.x, movement.y * 0.5f);
 		}
 		else if (Mathf.Abs(movement.x) < Mathf.Abs(movement.y))
 		{
-			Debug.Log("Y first");
 			AnimInput = new Vector2(movement.x * 0.5f, movement.y);
 		}
 		if ((AnimInput.x * movement.x < 0) || (AnimInput.y * movement.y < 0))
