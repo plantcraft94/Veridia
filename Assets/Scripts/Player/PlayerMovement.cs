@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,7 +14,14 @@ public class PlayerMovement : MonoBehaviour
 
 	public float JumpForce;
 
-	public float speed;
+	[Header("Movement")]
+	public float Speed;
+	float CurrSpeed;
+
+	List<float> SpeedMultipliers = new List<float>();
+	Vector3 targetVelocity;
+
+	float MinSpeedMul;
 
 	[Header("Input")]
 	public InputAction MoveAction;
@@ -32,12 +41,23 @@ public class PlayerMovement : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		bool IsGrounded = Physics.CheckBox(GroundCheckObject.position, new Vector3(1, 0.3f, 1), Quaternion.identity, GroundLayer);
+		bool IsGrounded = Physics.CheckBox(GroundCheckObject.position, new Vector3(0.9f, 0.3f, 0.9f), Quaternion.identity, GroundLayer);
 		Input();
 		Movement.Normalize();
+		Debug.Log(SpeedMultipliers.Count());
+		
+		if(SpeedMultipliers.Count() > 0)
+		{
+			MinSpeedMul = SpeedMultipliers.Min();
+		}
+		else
+		{
+			MinSpeedMul = 1f;
+		}
+		
+		CurrSpeed = Speed * MinSpeedMul;
 
-		Vector3 targetVelocity = Movement * speed;
-
+		targetVelocity = Movement * CurrSpeed;
 		Vector3 velocity = rb.linearVelocity;
 		velocity.x = targetVelocity.x;
 		velocity.z = targetVelocity.z;
@@ -48,7 +68,15 @@ public class PlayerMovement : MonoBehaviour
 			rb.linearVelocity = new Vector3(rb.linearVelocity.x, JumpForce, rb.linearVelocity.z);
 		}
 	}
-
+	
+	public void SpeedMul(float SpeedModifier)
+	{
+		SpeedMultipliers.Add(SpeedModifier);
+	}
+	public void RemoveSpeedMul(float SpeedModifier)
+	{
+		SpeedMultipliers.Remove(SpeedModifier);
+	}
 	void Input()
 	{
 		movement = MoveAction.ReadValue<Vector2>();

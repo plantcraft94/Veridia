@@ -15,6 +15,14 @@ public class Player : MonoBehaviour
 	void Update()
 	{
 		Animation();
+		if(Input.GetKeyDown(KeyCode.D))
+		{
+			PM.SpeedMul(0.2f);
+		}
+		if(Input.GetKeyUp(KeyCode.D))
+		{
+			PM.RemoveSpeedMul(0.2f);
+		}
 	}
 	
 	void Animation()

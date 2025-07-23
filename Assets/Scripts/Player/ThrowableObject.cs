@@ -1,4 +1,9 @@
 using UnityEngine;
+#if UNITY_EDITOR
+using Physics = Nomnom.RaycastVisualization.VisualPhysics;
+#else
+using Physics = UnityEngine.Physics;
+#endif
 
 public class ThrowableObject : MonoBehaviour
 {
@@ -7,10 +12,9 @@ public class ThrowableObject : MonoBehaviour
 	Transform Player;
 	Collider coll;
 	Rigidbody rb;
-	Vector3 direction;
-	
 	PlayerMovement PM;
-	
+	LayerMask GroundLayer;
+
 	public float ThrowForce;
 	void Start()
 	{
@@ -18,33 +22,31 @@ public class ThrowableObject : MonoBehaviour
 		coll = GetComponent<Collider>();
 		PM = Player.GetComponent<PlayerMovement>();
 		rb = GetComponent<Rigidbody>();
+		GroundLayer = LayerMask.NameToLayer("Ground");
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		if(Grabbed == 1)
+
+		if (Grabbed == 1)
 		{
 			transform.position = new Vector3(Player.position.x, Player.position.y + 1, Player.position.z);
 			coll.enabled = false;
 		}
-		else if(Grabbed == 2)
+		else if (Grabbed == 2)
 		{
 			rb.isKinematic = false;
-			rb.AddForce(new Vector3(PM.AnimInput.x, 0.5f,PM.AnimInput.y) * ThrowForce, ForceMode.Impulse);
+			rb.AddForce(new Vector3(PM.AnimInput.x, 0.5f, PM.AnimInput.y) * ThrowForce, ForceMode.Impulse);
 			Grabbed = 0;
 			coll.enabled = true;
 		}
 	}
-	private void OnCollisionEnter(Collision collision)
+	private void FixedUpdate()
 	{
-		if(collision.gameObject.layer == 6)
+		if (Physics.BoxCast(transform.position,new Vector3 (0.4f,0.1f,0.4f), Vector3.down, Quaternion.identity, 0.52f,1 << GroundLayer))
 		{
-			direction = collision.GetContact(0).normal;
-			if(direction.y == 1)
-			{
-				rb.isKinematic = true;
-			}
+			rb.isKinematic = true;
 		}
 	}
 }
