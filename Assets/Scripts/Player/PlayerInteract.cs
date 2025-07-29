@@ -18,7 +18,7 @@ public class PlayerInteract : MonoBehaviour
 	}
 	private void Update()
 	{
-		RotateBasedOnDirection(PM.AnimInput);
+		RotateBasedOnDirection(PM.PlayerFacingDirection);
 		if (IsHolding && interactAction.WasPressedThisFrame())
 		{
 			TO.Grabbed = 2;

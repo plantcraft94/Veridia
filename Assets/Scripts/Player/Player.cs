@@ -27,18 +27,17 @@ public class Player : MonoBehaviour
 	
 	void Animation()
 	{
-		if(PM.AnimInput != Vector2.zero)
+		if(PM.PlayerFacingDirection != Vector2.zero)
 		{
-			anim.SetFloat("MoveX", PM.AnimInput.x);
-			anim.SetFloat("MoveY", PM.AnimInput.y);
+			anim.SetFloat("MoveX", PM.PlayerFacingDirection.x);
+			anim.SetFloat("MoveY", PM.PlayerFacingDirection.y);
 		}
-		anim.SetBool("IsMoving", PM.AnimInput != Vector2.zero);
+		anim.SetBool("IsMoving", PM.PlayerFacingDirection != Vector2.zero);
 		// TEST
 
 		
 		if(Input.GetKeyDown(KeyCode.X))
 		{
-			Debug.Log("attack");
 			anim.SetTrigger("IsAttacking");
 		}
 	}

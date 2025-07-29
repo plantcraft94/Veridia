@@ -37,7 +37,7 @@ public class ThrowableObject : MonoBehaviour
 		else if (Grabbed == 2)
 		{
 			rb.isKinematic = false;
-			rb.AddForce(new Vector3(PM.AnimInput.x, 0.5f, PM.AnimInput.y) * ThrowForce, ForceMode.Impulse);
+			rb.AddForce(new Vector3(PM.PlayerFacingDirection.x, 0.5f, PM.PlayerFacingDirection.y) * ThrowForce, ForceMode.Impulse);
 			Grabbed = 0;
 			coll.enabled = true;
 		}

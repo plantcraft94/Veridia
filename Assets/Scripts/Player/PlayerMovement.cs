@@ -28,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
 	public InputAction JumpAction;
 
 	[Header("Animaition Stuff")]
-	public Vector2 AnimInput;
+	public Vector2 PlayerFacingDirection;
 
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start()
@@ -44,9 +44,8 @@ public class PlayerMovement : MonoBehaviour
 		bool IsGrounded = Physics.CheckBox(GroundCheckObject.position, new Vector3(0.9f, 0.3f, 0.9f), Quaternion.identity, GroundLayer);
 		Input();
 		Movement.Normalize();
-		Debug.Log(SpeedMultipliers.Count());
-		
-		if(SpeedMultipliers.Count() > 0)
+
+		if (SpeedMultipliers.Count() > 0)
 		{
 			MinSpeedMul = SpeedMultipliers.Min();
 		}
@@ -54,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
 		{
 			MinSpeedMul = 1f;
 		}
-		
+
 		CurrSpeed = Speed * MinSpeedMul;
 
 		targetVelocity = Movement * CurrSpeed;
@@ -68,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
 			rb.linearVelocity = new Vector3(rb.linearVelocity.x, JumpForce, rb.linearVelocity.z);
 		}
 	}
-	
+
 	public void SpeedMul(float SpeedModifier)
 	{
 		SpeedMultipliers.Add(SpeedModifier);
@@ -80,18 +79,25 @@ public class PlayerMovement : MonoBehaviour
 	void Input()
 	{
 		movement = MoveAction.ReadValue<Vector2>();
-		if (Mathf.Abs(movement.x) > Mathf.Abs(movement.y))
+		if (movement.sqrMagnitude < 0.01f) // Small threshold to avoid floating point issues
 		{
-			AnimInput = new Vector2(movement.x, movement.y * 0.5f);
+			Movement = Vector3.zero;
 		}
-		else if (Mathf.Abs(movement.x) < Mathf.Abs(movement.y))
-		{
-			AnimInput = new Vector2(movement.x * 0.5f, movement.y);
+		else
+		{	
+			if (Mathf.Abs(movement.x) > Mathf.Abs(movement.y))
+			{
+				PlayerFacingDirection = new Vector2(Mathf.Sign(movement.x), 0); // AnimInput = (-1,0) or (1,0)
+			}
+			else if (Mathf.Abs(movement.x) < Mathf.Abs(movement.y))
+			{
+				PlayerFacingDirection = new Vector2(0, Mathf.Sign(movement.y)); // AnimInput = (0,-1) or (0,1)
+			}
+			if ((PlayerFacingDirection.x * movement.x < 0) || (PlayerFacingDirection.y * movement.y < 0))
+			{
+				PlayerFacingDirection = new Vector2(0, Mathf.Sign(movement.y)); // AnimInput = (0,-1) or (0,1)
+			}
+			Movement = new Vector3(movement.x, 0, movement.y);
 		}
-		if ((AnimInput.x * movement.x < 0) || (AnimInput.y * movement.y < 0))
-		{
-			AnimInput = new Vector2(movement.x * 0.5f, movement.y);
-		}
-		Movement = new Vector3(movement.x, 0, movement.y);
 	}
 }

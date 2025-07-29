@@ -242,6 +242,7 @@ GameObject:
   - component: {fileID: 1666411361596681917}
   - component: {fileID: 3043216613756280962}
   - component: {fileID: 5698898533352583652}
+  - component: {fileID: 1515073858114157878}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -331,7 +332,7 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  AnimInput: {x: 0, y: 0}
+  PlayerFacingDirection: {x: 0, y: 0}
 --- !u!114 &5229419112219116029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -391,6 +392,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MagicGenAmountPerSecond: 1
+--- !u!114 &1515073858114157878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5720673260317752035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1b91acafd3ecff4ba08fde11e4fda0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Slot1: 0
+  Slot2: 0
 --- !u!1 &6950739087559353898
 GameObject:
   m_ObjectHideFlags: 0
