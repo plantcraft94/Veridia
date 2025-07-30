@@ -21,11 +21,11 @@ public class Inventory : MonoBehaviour
 	private void Update()
 	{
 		selected = EventSystem.current.currentSelectedGameObject;
-		if (ItemSlot1Action.WasPressedThisFrame() && selected != null)
+		if (ItemSlot1Action.WasPressedThisFrame() && selected.CompareTag("ItemContainer"))
 		{
 			itemsController.ChangeItemSlot1(selected.GetComponent<ItemContainer>().ChangeItemTo);
 		}
-		else if (ItemSlot2Action.WasPressedThisFrame() && selected != null)
+		else if (ItemSlot2Action.WasPressedThisFrame() && selected.CompareTag("ItemContainer"))
 		{
 			itemsController.ChangeItemSlot2(selected.GetComponent<ItemContainer>().ChangeItemTo);
 		}
