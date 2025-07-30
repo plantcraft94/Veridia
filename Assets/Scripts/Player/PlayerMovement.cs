@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -29,6 +30,8 @@ public class PlayerMovement : MonoBehaviour
 
 	[Header("Animaition Stuff")]
 	public Vector2 PlayerFacingDirection;
+	[Header("ItemInteraction")]
+	ItemsController IC;
 
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start()
@@ -36,11 +39,16 @@ public class PlayerMovement : MonoBehaviour
 		MoveAction = InputSystem.actions.FindAction("Move");
 		JumpAction = InputSystem.actions.FindAction("Jump");
 		rb = GetComponent<Rigidbody>();
+		IC = GetComponent<ItemsController>();
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
+		if(IC.HookShoted)
+		{
+			return;
+		}
 		bool IsGrounded = Physics.CheckBox(GroundCheckObject.position, new Vector3(0.9f, 0.3f, 0.9f), Quaternion.identity, GroundLayer);
 		Input();
 		Movement.Normalize();
@@ -84,7 +92,7 @@ public class PlayerMovement : MonoBehaviour
 			Movement = Vector3.zero;
 		}
 		else
-		{	
+		{
 			if (Mathf.Abs(movement.x) > Mathf.Abs(movement.y))
 			{
 				PlayerFacingDirection = new Vector2(Mathf.Sign(movement.x), 0); // AnimInput = (-1,0) or (1,0)
@@ -100,4 +108,34 @@ public class PlayerMovement : MonoBehaviour
 			Movement = new Vector3(movement.x, 0, movement.y);
 		}
 	}
+	public void StartHook(Vector3 target)
+	{
+		StartCoroutine(HookPlayer(target));
+	}
+
+	// Coroutine: Move player to target using Rigidbody.MovePosition
+	private IEnumerator HookPlayer(Vector3 target)
+	{
+		rb.useGravity = false;
+		// Continue until very close to target
+		while (Vector3.Distance(rb.position, target) > 0.01f)
+		{
+			// Move towards target at constant speed
+			Vector3 newPosition = Vector3.MoveTowards(
+				rb.position,
+				target,
+				IC.HookSpeed * Time.deltaTime
+			);
+
+			rb.MovePosition(newPosition);
+
+			yield return null; // Wait for next frame
+		}
+
+		// Ensure final position is exact
+		rb.MovePosition(target);
+		IC.HookShoted = false;
+		rb.useGravity = true;
+	}
+
 }
