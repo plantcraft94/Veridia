@@ -8,6 +8,7 @@ TagManager:
   - Interactable
   - ItemContainer
   - Hookable
+  - Hook
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - Water
   - UI
   - Ground
-  - 
+  - Hook
   - 
   - 
   - 

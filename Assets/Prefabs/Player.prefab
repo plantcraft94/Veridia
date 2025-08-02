@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3915360615152057142}
   - component: {fileID: 5999353507493851428}
   - component: {fileID: 3406560088508087887}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 836661709955505271}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 8733534021461481132}
   - component: {fileID: 8939476926644068978}
   - component: {fileID: 917888467950547373}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -425,9 +425,11 @@ MonoBehaviour:
     m_SingletonActionBindings: []
     m_Flags: 0
   ProjectileShotLocation: {fileID: 6705375625878056022}
-  HookSpeed: 10
+  HookSpeed: 15
   Hook: {fileID: 3844278846360174212, guid: e1d3b18a7c3e2f446a98bc8de1608a4f, type: 3}
   HookShoted: 0
+  MaxDistance: 8
+  WindProjectile: {fileID: 0}
 --- !u!1 &6522992880300319895
 GameObject:
   m_ObjectHideFlags: 0

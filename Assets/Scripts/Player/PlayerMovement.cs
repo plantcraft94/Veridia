@@ -47,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
 	{
 		if(IC.HookShoted)
 		{
+			rb.linearVelocity = Vector2.zero;
 			return;
 		}
 		bool IsGrounded = Physics.CheckBox(GroundCheckObject.position, new Vector3(0.9f, 0.3f, 0.9f), Quaternion.identity, GroundLayer);
@@ -108,13 +109,13 @@ public class PlayerMovement : MonoBehaviour
 			Movement = new Vector3(movement.x, 0, movement.y);
 		}
 	}
-	public void StartHook(Vector3 target)
+	public void StartHook(Vector3 target,GameObject Hook)
 	{
-		StartCoroutine(HookPlayer(target));
+		StartCoroutine(HookPlayer(target,Hook));
 	}
 
 	// Coroutine: Move player to target using Rigidbody.MovePosition
-	private IEnumerator HookPlayer(Vector3 target)
+	private IEnumerator HookPlayer(Vector3 target, GameObject Hook)
 	{
 		rb.useGravity = false;
 		// Continue until very close to target
@@ -136,6 +137,7 @@ public class PlayerMovement : MonoBehaviour
 		rb.MovePosition(target);
 		IC.HookShoted = false;
 		rb.useGravity = true;
+		Destroy(Hook);
 	}
 
 }

@@ -17,8 +17,6 @@ public class ItemsController : MonoBehaviour
 	
 	public InputAction ItemSlot1Action;
 	public InputAction ItemSlot2Action;
-
-	ItemsController itemsController;
 	PlayerMovement PM;
 	[SerializeField] Transform ProjectileShotLocation;
 
@@ -27,7 +25,9 @@ public class ItemsController : MonoBehaviour
 	public float HookSpeed;
 	[SerializeField] GameObject Hook;
 	public bool HookShoted = false;
-	float MaxDistance;
+	public float MaxDistance;
+	[Header("WindFan")]
+	[SerializeField] GameObject WindProjectile;
 	
 	private void Start()
 	{
@@ -54,6 +54,18 @@ public class ItemsController : MonoBehaviour
 					break;
 			}
 		}
+		else if (ItemSlot2Action.WasPressedThisFrame())
+		{
+			switch (Slot2)
+			{
+				case Item.HookShot:
+					HookShot();
+					break;
+				
+				default:
+					break;
+			}
+		}	
 	}
 
 
@@ -67,6 +79,10 @@ public class ItemsController : MonoBehaviour
 			frb.linearVelocity = HookSpeed * new Vector3(PM.PlayerFacingDirection.x,0,PM.PlayerFacingDirection.y);
 		}
 		
+	}
+	void WindFan()
+	{
+		GameObject FWind = Instantiate(WindProjectile, ProjectileShotLocation.position, Interacter.transform.rotation);
 	}
 
 
