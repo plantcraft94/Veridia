@@ -429,7 +429,8 @@ MonoBehaviour:
   Hook: {fileID: 3844278846360174212, guid: e1d3b18a7c3e2f446a98bc8de1608a4f, type: 3}
   HookShoted: 0
   MaxDistance: 8
-  WindProjectile: {fileID: 0}
+  WindProjectile: {fileID: 9042001159669007429, guid: a9120e3a51565d54287eab3018084b8f, type: 3}
+  WindSpeed: 12
 --- !u!1 &6522992880300319895
 GameObject:
   m_ObjectHideFlags: 0

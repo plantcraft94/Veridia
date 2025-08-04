@@ -14,7 +14,7 @@ public class ItemsController : MonoBehaviour
 	}
 	public Item Slot1;
 	public Item Slot2;
-	
+
 	public InputAction ItemSlot1Action;
 	public InputAction ItemSlot2Action;
 	PlayerMovement PM;
@@ -28,7 +28,8 @@ public class ItemsController : MonoBehaviour
 	public float MaxDistance;
 	[Header("WindFan")]
 	[SerializeField] GameObject WindProjectile;
-	
+	public float WindSpeed;
+
 	private void Start()
 	{
 		Slot1 = Item.None;
@@ -42,6 +43,10 @@ public class ItemsController : MonoBehaviour
 
 	private void Update()
 	{
+		if(UiController.Instance.isInInv)
+		{
+			return;
+		}
 		if (ItemSlot1Action.WasPressedThisFrame())
 		{
 			switch (Slot1)
@@ -49,7 +54,11 @@ public class ItemsController : MonoBehaviour
 				case Item.HookShot:
 					HookShot();
 					break;
-				
+				case Item.WindFan:
+					WindFan();
+					break;
+
+
 				default:
 					break;
 			}
@@ -61,34 +70,40 @@ public class ItemsController : MonoBehaviour
 				case Item.HookShot:
 					HookShot();
 					break;
-				
+				case Item.WindFan:
+					WindFan();
+					break;
+
+
 				default:
 					break;
 			}
-		}	
+		}
 	}
 
 
 	void HookShot()
 	{
-		if(!HookShoted)
+		if (!HookShoted)
 		{
 			HookShoted = true;
 			GameObject FHook = Instantiate(Hook, ProjectileShotLocation.position, Interacter.transform.rotation);
 			Rigidbody frb = FHook.GetComponent<Rigidbody>();
-			frb.linearVelocity = HookSpeed * new Vector3(PM.PlayerFacingDirection.x,0,PM.PlayerFacingDirection.y);
+			frb.linearVelocity = HookSpeed * new Vector3(PM.PlayerFacingDirection.x, 0, PM.PlayerFacingDirection.y);
 		}
-		
+
 	}
 	void WindFan()
 	{
 		GameObject FWind = Instantiate(WindProjectile, ProjectileShotLocation.position, Interacter.transform.rotation);
+		Rigidbody frb = FWind.GetComponent<Rigidbody>();
+		frb.linearVelocity = WindSpeed * new Vector3(PM.PlayerFacingDirection.x, 0, PM.PlayerFacingDirection.y);
 	}
 
 
 	public void ChangeItemSlot1(Item nextItem)
 	{
-		if(nextItem == Slot2)
+		if (nextItem == Slot2)
 		{
 			Slot2 = Item.None;
 		}
@@ -96,7 +111,7 @@ public class ItemsController : MonoBehaviour
 	}
 	public void ChangeItemSlot2(Item nextItem)
 	{
-		if(nextItem == Slot1)
+		if (nextItem == Slot1)
 		{
 			Slot1 = Item.None;
 		}

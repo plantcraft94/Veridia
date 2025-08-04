@@ -9,6 +9,7 @@ TagManager:
   - ItemContainer
   - Hookable
   - Hook
+  - Wind
   layers:
   - Default
   - TransparentFX

@@ -40,11 +40,16 @@ public class PlayerMovement : MonoBehaviour
 		JumpAction = InputSystem.actions.FindAction("Jump");
 		rb = GetComponent<Rigidbody>();
 		IC = GetComponent<ItemsController>();
+		PlayerFacingDirection = Vector2.down;
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
+		if(UiController.Instance.isInInv)
+		{
+			return;
+		}
 		if(IC.HookShoted)
 		{
 			rb.linearVelocity = Vector2.zero;
@@ -96,15 +101,15 @@ public class PlayerMovement : MonoBehaviour
 		{
 			if (Mathf.Abs(movement.x) > Mathf.Abs(movement.y))
 			{
-				PlayerFacingDirection = new Vector2(Mathf.Sign(movement.x), 0); // AnimInput = (-1,0) or (1,0)
+				PlayerFacingDirection = new Vector2(Mathf.Sign(movement.x), 0);
 			}
 			else if (Mathf.Abs(movement.x) < Mathf.Abs(movement.y))
 			{
-				PlayerFacingDirection = new Vector2(0, Mathf.Sign(movement.y)); // AnimInput = (0,-1) or (0,1)
+				PlayerFacingDirection = new Vector2(0, Mathf.Sign(movement.y));
 			}
 			if ((PlayerFacingDirection.x * movement.x < 0) || (PlayerFacingDirection.y * movement.y < 0))
 			{
-				PlayerFacingDirection = new Vector2(0, Mathf.Sign(movement.y)); // AnimInput = (0,-1) or (0,1)
+				PlayerFacingDirection = new Vector2(0, Mathf.Sign(movement.y));
 			}
 			Movement = new Vector3(movement.x, 0, movement.y);
 		}
