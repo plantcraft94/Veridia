@@ -1,23 +1,21 @@
 using AYellowpaper.SerializedCollections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+public enum Item
+{
+	None,
+	HookShot,
+	WindFan,
+	BowAndArrow,
+	Bomb
+}
 public class ItemsController : MonoBehaviour
 {
 
-	public enum Item
-	{
-		None,
-		HookShot,
-		WindFan,
-		BowAndArrow,
-		Bomb
-	}
-	[SerializedDictionary("Item", "Sprite")]
-	public SerializedDictionary<Item, Sprite> SpriteItem;
 	public Item Slot1;
 	public Item Slot2;
-	
-	
+
+
 
 	public InputAction ItemSlot1Action;
 	public InputAction ItemSlot2Action;
@@ -47,7 +45,7 @@ public class ItemsController : MonoBehaviour
 
 	private void Update()
 	{
-		if(UiController.Instance.isInInv)
+		if (UiController.Instance.isInInv)
 		{
 			return;
 		}

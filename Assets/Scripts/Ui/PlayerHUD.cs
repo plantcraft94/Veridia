@@ -17,7 +17,7 @@ public class PlayerHUD : MonoBehaviour
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	public void UpdateItemIcon()
 	{
-		Item1.transform.GetChild(0).GetComponent<Image>().sprite = Icontroller.SpriteItem[Icontroller.Slot1];
-		Item2.transform.GetChild(0).GetComponent<Image>().sprite = Icontroller.SpriteItem[Icontroller.Slot2];
+		Item1.transform.GetChild(0).GetComponent<Image>().sprite = ItemSprite.Instance.SpriteItem[Icontroller.Slot1];
+		Item2.transform.GetChild(0).GetComponent<Image>().sprite = ItemSprite.Instance.SpriteItem[Icontroller.Slot2];
 	}
 }

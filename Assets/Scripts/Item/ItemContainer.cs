@@ -5,15 +5,14 @@ public class ItemContainer : MonoBehaviour
 {
 	public string Name;
 	public string Description;
-	public ItemsController.Item ChangeItemTo;
-	public Sprite Icon;
+	public Item ChangeItemTo;
 
 	Image image;
 
 	private void Start()
 	{
 		image = transform.GetChild(0).GetComponent<Image>();
-		image.sprite = Icon;
+		image.sprite = ItemSprite.Instance.SpriteItem[ChangeItemTo];
 	}
 	
 }
