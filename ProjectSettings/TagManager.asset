@@ -10,6 +10,7 @@ TagManager:
   - Hookable
   - Hook
   - Wind
+  - PlayerHUD
   layers:
   - Default
   - TransparentFX

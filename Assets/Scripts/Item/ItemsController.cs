@@ -1,6 +1,6 @@
+using AYellowpaper.SerializedCollections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
 public class ItemsController : MonoBehaviour
 {
 
@@ -12,8 +12,12 @@ public class ItemsController : MonoBehaviour
 		BowAndArrow,
 		Bomb
 	}
+	[SerializedDictionary("Item", "Sprite")]
+	public SerializedDictionary<Item, Sprite> SpriteItem;
 	public Item Slot1;
 	public Item Slot2;
+	
+	
 
 	public InputAction ItemSlot1Action;
 	public InputAction ItemSlot2Action;
