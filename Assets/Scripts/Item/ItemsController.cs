@@ -1,4 +1,3 @@
-using AYellowpaper.SerializedCollections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 public enum Item
@@ -46,6 +45,10 @@ public class ItemsController : MonoBehaviour
 	private void Update()
 	{
 		if (UiController.Instance.isInInv)
+		{
+			return;
+		}
+		if(PM.isJumping)
 		{
 			return;
 		}

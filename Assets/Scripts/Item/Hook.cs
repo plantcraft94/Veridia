@@ -35,7 +35,7 @@ public class Hook : MonoBehaviour
 			Destroy(gameObject);
 		}	
 		RaycastHit hit;
-		if (Physics.BoxCast(transform.position,new Vector3(0.25f,0.25f,0.25f), transform.forward, out hit,transform.rotation, 0.5f) && !collide)
+		if (Physics.BoxCast(transform.position,new Vector3(0.3f,0.25f,0.25f), transform.forward, out hit,transform.rotation, 0.5f) && !collide)
 		{
 			
 			Debug.Log(Vector3.Distance(PlayerGameObject.transform.position, hit.transform.position));

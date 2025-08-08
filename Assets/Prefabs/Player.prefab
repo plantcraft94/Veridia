@@ -218,7 +218,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7274703fcd8acea4491c03bac0bc816b, type: 2}
+  - {fileID: -876546973899608171, guid: dcad68e481ce497499b8a90c546b42b2, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -360,6 +360,7 @@ MonoBehaviour:
     m_Bits: 64
   JumpForce: 15
   Speed: 6
+  isJumping: 0
   MoveAction:
     m_Name: Move
     m_Type: 0

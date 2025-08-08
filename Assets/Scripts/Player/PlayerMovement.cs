@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+#if UNITY_EDITOR
+using Physics = Nomnom.RaycastVisualization.VisualPhysics;
+#else
+using Physics = UnityEngine.Physics;
+#endif
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -21,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
 
 	List<float> SpeedMultipliers = new List<float>();
 	Vector3 targetVelocity;
+	public bool isJumping;
 
 	float MinSpeedMul;
 
@@ -55,7 +61,8 @@ public class PlayerMovement : MonoBehaviour
 			rb.linearVelocity = Vector2.zero;
 			return;
 		}
-		bool IsGrounded = Physics.CheckBox(GroundCheckObject.position, new Vector3(0.9f, 0.3f, 0.9f), Quaternion.identity, GroundLayer);
+		bool IsGrounded = Physics.CheckBox(GroundCheckObject.position, new Vector3(0.5f, 0.1f, 0.5f), Quaternion.identity, GroundLayer);
+		isJumping = !IsGrounded;
 		Input();
 		Movement.Normalize();
 
