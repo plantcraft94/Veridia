@@ -30,6 +30,10 @@ public class ItemsController : MonoBehaviour
 	[Header("WindFan")]
 	[SerializeField] GameObject WindProjectile;
 	public float WindSpeed;
+	GameObject FWind;
+	[Header("Bomb")]
+	[SerializeField] GameObject BombObject;
+	GameObject FBomb;
 
 	private void Start()
 	{
@@ -44,11 +48,11 @@ public class ItemsController : MonoBehaviour
 
 	private void Update()
 	{
-		if (UiController.Instance.isInInv)
+		if (GameManager.Instance.isInInv)
 		{
 			return;
 		}
-		if(PM.isJumping)
+		if (PM.isJumping)
 		{
 			return;
 		}
@@ -61,6 +65,9 @@ public class ItemsController : MonoBehaviour
 					break;
 				case Item.WindFan:
 					WindFan();
+					break;
+				case Item.Bomb:
+					Bomb();
 					break;
 
 
@@ -77,6 +84,9 @@ public class ItemsController : MonoBehaviour
 					break;
 				case Item.WindFan:
 					WindFan();
+					break;
+				case Item.Bomb:
+					Bomb();
 					break;
 
 
@@ -100,9 +110,19 @@ public class ItemsController : MonoBehaviour
 	}
 	void WindFan()
 	{
-		GameObject FWind = Instantiate(WindProjectile, ProjectileShotLocation.position, Interacter.transform.rotation);
-		Rigidbody frb = FWind.GetComponent<Rigidbody>();
-		frb.linearVelocity = WindSpeed * new Vector3(PM.PlayerFacingDirection.x, 0, PM.PlayerFacingDirection.y);
+		if (FWind == null)
+		{
+			FWind = Instantiate(WindProjectile, ProjectileShotLocation.position, Interacter.transform.rotation);
+			Rigidbody frb = FWind.GetComponent<Rigidbody>();
+			frb.linearVelocity = WindSpeed * new Vector3(PM.PlayerFacingDirection.x, 0, PM.PlayerFacingDirection.y);
+		}
+	}
+	void Bomb()
+	{
+		if (FBomb == null)
+		{
+			FBomb = Instantiate(BombObject, ProjectileShotLocation.position, Quaternion.identity);
+		}
 	}
 
 

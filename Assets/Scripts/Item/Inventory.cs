@@ -25,12 +25,12 @@ public class Inventory : MonoBehaviour
 		selected = EventSystem.current.currentSelectedGameObject;
 		if (ItemSlot1Action.WasPressedThisFrame() && selected.CompareTag("ItemContainer"))
 		{
-			itemsController.ChangeItemSlot1(selected.GetComponent<ItemContainer>().ChangeItemTo);
+			itemsController.ChangeItemSlot1(selected.GetComponent<ItemContainer>().ChangeItem());
 			playerHUD.UpdateItemIcon();
 		}
 		else if (ItemSlot2Action.WasPressedThisFrame() && selected.CompareTag("ItemContainer"))
 		{
-			itemsController.ChangeItemSlot2(selected.GetComponent<ItemContainer>().ChangeItemTo);
+			itemsController.ChangeItemSlot2(selected.GetComponent<ItemContainer>().ChangeItem());
 			playerHUD.UpdateItemIcon();
 		}
 	}

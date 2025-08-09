@@ -8,11 +8,31 @@ public class ItemContainer : MonoBehaviour
 	public Item ChangeItemTo;
 
 	Image image;
-
 	private void Start()
 	{
 		image = transform.GetChild(0).GetComponent<Image>();
-		image.sprite = ItemSprite.Instance.SpriteItem[ChangeItemTo];
 	}
-	
+	private void OnEnable()
+	{
+		if(GameManager.Instance != null)
+		{	
+			if (GameManager.Instance.HasItem(ChangeItemTo))
+			{
+				image.sprite = ItemSprite.Instance.SpriteItem[ChangeItemTo];
+			}
+			else if (!GameManager.Instance.HasItem(ChangeItemTo) && image != null)
+			{
+				image.sprite = ItemSprite.Instance.SpriteItem[Item.None];
+			}
+		}
+	}
+	public Item ChangeItem()
+	{
+		if (GameManager.Instance.HasItem(ChangeItemTo))
+		{
+			return ChangeItemTo;
+		}
+		return Item.None;
+	}
+
 }

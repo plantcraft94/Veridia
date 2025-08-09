@@ -52,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if(UiController.Instance.isInInv)
+		if(GameManager.Instance.isInInv)
 		{
 			return;
 		}

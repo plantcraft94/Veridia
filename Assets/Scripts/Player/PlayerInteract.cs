@@ -1,5 +1,10 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+#if UNITY_EDITOR
+using Physics = Nomnom.RaycastVisualization.VisualPhysics;
+#else
+using Physics = UnityEngine.Physics;
+#endif
 
 public class PlayerInteract : MonoBehaviour
 {
@@ -28,20 +33,34 @@ public class PlayerInteract : MonoBehaviour
 		{
 			Interacter.SetActive(true);
 		}
-	}
-	private void OnTriggerStay(Collider other)
-	{
-		if (other.gameObject.CompareTag("Throwable"))
+		RaycastHit hit;
+		if (Physics.Raycast(Interacter.transform.position, Interacter.transform.forward, out hit, 1f))
 		{
-			if (!IsHolding && interactAction.WasPressedThisFrame())
+			if (hit.collider.gameObject.GetComponent<ThrowableObject>() != null)
 			{
-				Interacter.SetActive(false);
-				TO = other.GetComponent<ThrowableObject>();
-				TO.Grabbed = 1;
-				IsHolding = true;
+				if (!IsHolding && interactAction.WasPressedThisFrame())
+				{
+					Interacter.SetActive(false);
+					TO = hit.collider.GetComponent<ThrowableObject>();
+					TO.Grabbed = 1;
+					IsHolding = true;
+				}
 			}
 		}
 	}
+	// private void OnTriggerStay(Collider other)
+	// {
+	// 	if (other.gameObject.GetComponent<ThrowableObject>() != null)
+	// 	{
+	// 		if (!IsHolding && interactAction.WasPressedThisFrame())
+	// 		{
+	// 			Interacter.SetActive(false);
+	// 			TO = other.GetComponent<ThrowableObject>();
+	// 			TO.Grabbed = 1;
+	// 			IsHolding = true;
+	// 		}
+	// 	}
+	// }
 	void RotateBasedOnDirection(Vector2 direction)
 	{
 		if (direction == Vector2.zero) return;

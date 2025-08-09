@@ -11,6 +11,7 @@ TagManager:
   - Hook
   - Wind
   - PlayerHUD
+  - CinemachineCam
   layers:
   - Default
   - TransparentFX
