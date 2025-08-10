@@ -478,6 +478,7 @@ MonoBehaviour:
   MaxDistance: 8
   WindProjectile: {fileID: 9042001159669007429, guid: a9120e3a51565d54287eab3018084b8f, type: 3}
   WindSpeed: 12
+  BombObject: {fileID: 8465303310608056023, guid: fba203e61105d974fae1a9cb9a4c40f3, type: 3}
 --- !u!1 &6522992880300319895
 GameObject:
   m_ObjectHideFlags: 0
@@ -518,7 +519,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6323651984169902899}
-  - component: {fileID: 8718026171774094111}
   m_Layer: 3
   m_Name: Interacter
   m_TagString: Untagged
@@ -542,24 +542,3 @@ Transform:
   - {fileID: 6705375625878056022}
   m_Father: {fileID: 1705913390483058764}
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
---- !u!65 &8718026171774094111
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6950739087559353898}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.5, y: 0.5, z: 0.8}
-  m_Center: {x: 0, y: 0, z: 0.5}
