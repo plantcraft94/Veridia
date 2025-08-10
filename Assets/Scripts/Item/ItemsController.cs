@@ -19,6 +19,7 @@ public class ItemsController : MonoBehaviour
 	public InputAction ItemSlot1Action;
 	public InputAction ItemSlot2Action;
 	PlayerMovement PM;
+	PlayerResource PR;
 	[SerializeField] Transform ProjectileShotLocation;
 
 	GameObject Interacter;
@@ -30,6 +31,7 @@ public class ItemsController : MonoBehaviour
 	[Header("WindFan")]
 	[SerializeField] GameObject WindProjectile;
 	public float WindSpeed;
+	[SerializeField] float WindMagicCost;
 	GameObject FWind;
 	[Header("Bomb")]
 	[SerializeField] GameObject BombObject;
@@ -43,6 +45,7 @@ public class ItemsController : MonoBehaviour
 		ItemSlot2Action = InputSystem.actions.FindAction("ItemSlot2");
 		Interacter = transform.GetChild(3).gameObject;
 		PM = GetComponent<PlayerMovement>();
+		PR = GetComponent<PlayerResource>();
 	}
 
 
@@ -105,16 +108,19 @@ public class ItemsController : MonoBehaviour
 			GameObject FHook = Instantiate(Hook, ProjectileShotLocation.position, Interacter.transform.rotation);
 			Rigidbody frb = FHook.GetComponent<Rigidbody>();
 			frb.linearVelocity = HookSpeed * new Vector3(PM.PlayerFacingDirection.x, 0, PM.PlayerFacingDirection.y);
+			ItemFailSafe(FHook);
 		}
 
 	}
 	void WindFan()
 	{
-		if (FWind == null)
+		if (FWind == null && PR.Magic >= WindMagicCost)
 		{
 			FWind = Instantiate(WindProjectile, ProjectileShotLocation.position, Interacter.transform.rotation);
+			PR.MinusMagic(WindMagicCost);
 			Rigidbody frb = FWind.GetComponent<Rigidbody>();
 			frb.linearVelocity = WindSpeed * new Vector3(PM.PlayerFacingDirection.x, 0, PM.PlayerFacingDirection.y);
+			ItemFailSafe(FWind);
 		}
 	}
 	void Bomb()
@@ -141,5 +147,9 @@ public class ItemsController : MonoBehaviour
 			Slot1 = Item.None;
 		}
 		Slot2 = nextItem;
+	}
+	void ItemFailSafe(GameObject theObj)
+	{
+		Destroy(theObj, 2f);
 	}
 }

@@ -438,7 +438,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30b21ba9735e8114f8c8c664874e33c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MagicGenAmountPerSecond: 1
+  MagicGenAmountPerSecond: 5
 --- !u!114 &1515073858114157878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -478,6 +478,7 @@ MonoBehaviour:
   MaxDistance: 8
   WindProjectile: {fileID: 9042001159669007429, guid: a9120e3a51565d54287eab3018084b8f, type: 3}
   WindSpeed: 12
+  WindMagicCost: 30
   BombObject: {fileID: 8465303310608056023, guid: fba203e61105d974fae1a9cb9a4c40f3, type: 3}
 --- !u!1 &6522992880300319895
 GameObject:

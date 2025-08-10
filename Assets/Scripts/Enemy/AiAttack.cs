@@ -32,10 +32,10 @@ public class AiAttack : MonoBehaviour
 
     void DoAttack(Transform target)
     {
-        var playerHM = target.GetComponent<PlayerHM>();
-        if (playerHM != null)
+        var playerResource = target.GetComponent<PlayerResource>();
+        if (playerResource != null)
         {
-            playerHM.DamageHealth(damage);
+            playerResource.DamageHealth(damage);
         }
     }
 }

@@ -1,15 +1,16 @@
 using UnityEngine;
 
-public class PlayerHM : MonoBehaviour
+public class PlayerResource : MonoBehaviour
 {
-	float Health;
-	float MaxHealth;
-	float Magic = 0;
+	public float Health{ get; private set; }
+	public float MaxHealth{ get; private set; }
+	public float Magic { get; private set; }
 	[SerializeField] float MagicGenAmountPerSecond;
 
 	private void Start()
 	{
-		
+		MaxHealth = 100f;
+		Health = MaxHealth;
 	}
 	private void Update()
 	{

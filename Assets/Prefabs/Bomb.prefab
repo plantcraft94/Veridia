@@ -240,6 +240,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ExplodeTimer: 5
   ExplodeEffect: {fileID: 8162552448543195474, guid: a40af852de66d784586a3dd3d0e185b7, type: 3}
+  ColorchangeSpeed: 10
 --- !u!114 &5134056850189755483
 MonoBehaviour:
   m_ObjectHideFlags: 0

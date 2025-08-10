@@ -34,7 +34,7 @@ public class PlayerInteract : MonoBehaviour
 			Interacter.SetActive(true);
 		}
 		RaycastHit hit;
-		if (Physics.Raycast(Interacter.transform.position, Interacter.transform.forward, out hit, 1f))
+		if (Physics.Raycast(Interacter.transform.position, Interacter.transform.forward, out hit, 1f) && Interacter.activeSelf)
 		{
 			if (hit.collider.gameObject.GetComponent<ThrowableObject>() != null)
 			{

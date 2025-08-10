@@ -4,15 +4,26 @@ using UnityEngine.UI;
 public class PlayerHUD : MonoBehaviour
 {
 	[SerializeField] GameObject HealthBar;
+	Image Health;
 	[SerializeField] GameObject MagicBar;
+	Image Magic;
 	[SerializeField] GameObject Item1;
 	[SerializeField] GameObject Item2;
-	GameObject PLayerGameObject;
+	GameObject PlayerGameObject;
 	ItemsController Icontroller;
+	PlayerResource PR;
 	private void Start()
 	{
-		PLayerGameObject = GameObject.FindGameObjectWithTag("Player");
-		Icontroller = PLayerGameObject.GetComponent<ItemsController>();
+		Health = HealthBar.transform.GetChild(0).GetComponent<Image>();
+		Magic = MagicBar.transform.GetChild(0).GetComponent<Image>();
+		PlayerGameObject = GameObject.FindGameObjectWithTag("Player");
+		Icontroller = PlayerGameObject.GetComponent<ItemsController>();
+		PR = PlayerGameObject.GetComponent<PlayerResource>();
+	}
+	private void Update()
+	{
+		Health.fillAmount = PR.Health / PR.MaxHealth;
+		Magic.fillAmount = PR.Magic / 100;
 	}
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	public void UpdateItemIcon()

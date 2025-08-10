@@ -979,7 +979,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 1
-  m_AdditionalShaderChannelsFlag: 25
+  m_AdditionalShaderChannelsFlag: 1
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -4428,13 +4428,13 @@ SceneRoots:
   - {fileID: 1875573664}
   - {fileID: 410087041}
   - {fileID: 832575519}
-  - {fileID: 933975200}
-  - {fileID: 1659282638}
   - {fileID: 1994386945}
   - {fileID: 7545026260480967909}
   - {fileID: 336949936204984428}
   - {fileID: 1658674604219003434}
   - {fileID: 3479852963540780091}
+  - {fileID: 933975200}
+  - {fileID: 1659282638}
   - {fileID: 2130002535}
   - {fileID: 1039269958}
   - {fileID: 885959017}
