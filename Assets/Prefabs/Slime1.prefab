@@ -414,7 +414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0417d21ab9f2d24d895b6e8017b8d82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 13
+  distance: 12
   angle: 55
   height: 0.72
   meshColor: {r: 1, g: 0, b: 0, a: 0.70980394}
@@ -441,7 +441,7 @@ MonoBehaviour:
   sensor: {fileID: 2308005450622864018}
   updateRate: 0.5
   patrolCenter: {x: 0, y: 0, z: 0}
-  patrolSize: {x: 10, y: 0, z: 10}
+  patrolSize: {x: 5, y: 0, z: 5}
   patrolPointReachedThreshold: 1
   searchDuration: 3
   rotationSpeed: 120
