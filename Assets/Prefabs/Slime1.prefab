@@ -328,6 +328,7 @@ GameObject:
   - component: {fileID: 2308005450622864018}
   - component: {fileID: 6383412464506627755}
   - component: {fileID: 293526099514421333}
+  - component: {fileID: 7692214222544308936}
   - component: {fileID: 2624469888477202704}
   m_Layer: 0
   m_Name: Slime1
@@ -414,9 +415,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0417d21ab9f2d24d895b6e8017b8d82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 12
-  angle: 55
-  height: 0.72
+  distance: 11.35
+  angle: 55.4
+  height: 0.66
   meshColor: {r: 1, g: 0, b: 0, a: 0.70980394}
   scanFrequency: 30
   layers:
@@ -462,6 +463,26 @@ MonoBehaviour:
   damage: 10
   anim: {fileID: 0}
   targetTransform: {fileID: 0}
+--- !u!114 &7692214222544308936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7395531842707783552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccafbaa95384c344abcd8d686496c070, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 20
+  currentHealth: 0
+  onDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  onDamage:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!195 &2624469888477202704
 NavMeshAgent:
   m_ObjectHideFlags: 0
