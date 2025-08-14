@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class RememberCurrentlySelectedGameObject : MonoBehaviour
 {
 	[SerializeField] private EventSystem eventSystem;
-	[SerializeField] private GameObject lastSelectedElement;
+	GameObject lastSelectedElement;
 
 	private void Reset()
 	{
@@ -24,11 +24,9 @@ public class RememberCurrentlySelectedGameObject : MonoBehaviour
 	{
 		if (!eventSystem)
 			return;
-
 		if (eventSystem.currentSelectedGameObject &&
 			lastSelectedElement != eventSystem.currentSelectedGameObject)
-			lastSelectedElement = eventSystem.currentSelectedGameObject;
-
+			lastSelectedElement = eventSystem.currentSelectedGameObject;		
 		if (!eventSystem.currentSelectedGameObject && lastSelectedElement)
 			eventSystem.SetSelectedGameObject(lastSelectedElement);
 	}

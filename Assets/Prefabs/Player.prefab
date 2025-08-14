@@ -439,6 +439,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MagicGenAmountPerSecond: 5
+  BombAmount: 0
+  ArrowAmount: 0
 --- !u!114 &1515073858114157878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -480,6 +482,9 @@ MonoBehaviour:
   WindSpeed: 12
   WindMagicCost: 30
   BombObject: {fileID: 8465303310608056023, guid: fba203e61105d974fae1a9cb9a4c40f3, type: 3}
+  Arrow: {fileID: 3837175505618606921, guid: 702410d0b1352144bbf0d259afa085df, type: 3}
+  Damage: 0
+  ArrowSpeed: 15
 --- !u!1 &6522992880300319895
 GameObject:
   m_ObjectHideFlags: 0
