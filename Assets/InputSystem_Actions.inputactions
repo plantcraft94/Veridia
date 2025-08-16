@@ -76,6 +76,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "WingBoot",
+                    "type": "Button",
+                    "id": "60ffd2c9-afae-40ab-af6c-0ff2ca0d7563",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -329,6 +338,17 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "BowSubMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f76c8dcf-c743-4b18-bf70-811cd5c32b22",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "WingBoot",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

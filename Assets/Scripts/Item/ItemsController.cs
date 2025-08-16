@@ -6,7 +6,8 @@ public enum Item
 	HookShot,
 	WindFan,
 	BowAndArrow,
-	Bomb
+	Bomb,
+	WingBoot
 }
 
 public enum ArrowElement

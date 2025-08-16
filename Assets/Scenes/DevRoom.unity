@@ -862,6 +862,8 @@ MonoBehaviour:
       Value: 1
     - Key: 4
       Value: 1
+    - Key: 5
+      Value: 1
   isInInv: 0
 --- !u!4 &885959017
 Transform:
@@ -5387,6 +5389,26 @@ PrefabInstance:
     - target: {fileID: 1705913390483058764, guid: 36565e5208f4ad248b4437ee69e863c5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5386766699744738177, guid: 36565e5208f4ad248b4437ee69e863c5, type: 3}
+      propertyPath: JumpForce
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 5386766699744738177, guid: 36565e5208f4ad248b4437ee69e863c5, type: 3}
+      propertyPath: RunMultiplyer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5386766699744738177, guid: 36565e5208f4ad248b4437ee69e863c5, type: 3}
+      propertyPath: RunAction.m_Name
+      value: Run
+      objectReference: {fileID: 0}
+    - target: {fileID: 5698898533352583652, guid: 36565e5208f4ad248b4437ee69e863c5, type: 3}
+      propertyPath: BombAmount
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5698898533352583652, guid: 36565e5208f4ad248b4437ee69e863c5, type: 3}
+      propertyPath: ArrowAmount
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5720673260317752035, guid: 36565e5208f4ad248b4437ee69e863c5, type: 3}
       propertyPath: m_Name
