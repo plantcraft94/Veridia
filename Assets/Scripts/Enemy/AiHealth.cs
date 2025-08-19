@@ -10,7 +10,12 @@ public class AiHealth : MonoBehaviour
     [Header("Events")]
     public UnityEvent onDeath;
     public UnityEvent onDamage;
-    // qly animation, func
+
+    [Header("Drop Settings")]
+    public GameObject[] dropPrefabs;
+    public int minDrop = 1;
+    public int maxDrop = 2;
+
     private void Awake()
     {
         currentHealth = maxHealth;
@@ -35,7 +40,23 @@ public class AiHealth : MonoBehaviour
 
     public void Die()
     {
+        DropItems();
+
         if (onDeath != null) onDeath.Invoke();
         Destroy(gameObject);
+    }
+
+    private void DropItems()
+    {
+        if (dropPrefabs == null || dropPrefabs.Length == 0) return;
+        int dropCount = Random.Range(minDrop, maxDrop + 1);
+
+        for (int i = 0; i < dropCount; i++)
+        {
+            var prefab = dropPrefabs[Random.Range(0, dropPrefabs.Length)];
+            Vector3 dropPos = transform.position + Random.insideUnitSphere * 0.5f;
+            dropPos.y = transform.position.y;
+            Instantiate(prefab, dropPos, Quaternion.identity);
+        }
     }
 }
