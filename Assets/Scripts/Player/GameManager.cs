@@ -28,7 +28,14 @@ public class GameManager : MonoBehaviour
 	}
 	private void Start()
 	{
-		ItemPossesion[Item.None] = true;
+        foreach (Item item in System.Enum.GetValues(typeof(Item)))
+        {
+            if (!ItemPossesion.ContainsKey(item))
+            {
+                ItemPossesion[item] = false;
+            }
+        }
+        ItemPossesion[Item.None] = true;
 		cam = GameObject.Find("CinemachineCamera").gameObject;
 		amp = cam.GetComponent<CinemachineBasicMultiChannelPerlin>();
 	}
