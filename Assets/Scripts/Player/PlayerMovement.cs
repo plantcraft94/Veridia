@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 #if UNITY_EDITOR
 using Physics = Nomnom.RaycastVisualization.VisualPhysics;
@@ -46,6 +47,8 @@ public class PlayerMovement : MonoBehaviour
 	Vector2 runStartDirection;
 	bool startRun;
 	Coroutine currentco;
+	public GameObject Interacter;
+	public UnityEvent Crash;
 
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start()
@@ -77,7 +80,14 @@ public class PlayerMovement : MonoBehaviour
 		Movement.Normalize();
 		if (JumpAction.WasPressedThisFrame() && IsGrounded)
 		{
-			rb.linearVelocity = new Vector3(rb.linearVelocity.x, JumpForce, rb.linearVelocity.z);
+			if(isRunning)
+			{
+				rb.linearVelocity = new Vector3(rb.linearVelocity.x, 15.5f, rb.linearVelocity.z);
+			}
+			else
+			{		
+				rb.linearVelocity = new Vector3(rb.linearVelocity.x, JumpForce, rb.linearVelocity.z);
+			}
 		}
 
 		if (SpeedMultipliers.Count() > 0)
@@ -112,6 +122,23 @@ public class PlayerMovement : MonoBehaviour
 			runvelocity.x = targetVelocity.x;
 			runvelocity.z = targetVelocity.z;
 			rb.linearVelocity = runvelocity;
+			RaycastHit hit;
+			if (Physics.Raycast(Interacter.transform.position, Interacter.transform.forward, out hit, 0.75f))
+			{
+				if(hit.collider.gameObject.CompareTag("RampBlock"))
+				{
+					hit.collider.gameObject.GetComponent<RampBlock>().Break();
+				}
+				else if(hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+				{
+					isRunning = false;
+					GameManager.Instance.ShakeCamera();
+					if(Crash != null)
+					{
+						Crash.Invoke();
+					}
+				}
+			}
 		}
 		if (!isRunning && !isSlowed)
 		{

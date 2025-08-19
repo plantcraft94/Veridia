@@ -1,22 +1,26 @@
 using UnityEngine;
 using PrimeTween;
+using UnityEngine.InputSystem;
 
 public class CameraStuff : MonoBehaviour
 {
-	[SerializeField] private Transform player; // Better than FindGameObjectWithTag
-	private PlayerMovement PM;
 	private Vector3 currentTargetDirection;
+	InputAction MoveCamAction;
+	Vector2 CamDir;
 
 	private void Start()
 	{
-		player = GameObject.FindGameObjectWithTag("Player").transform;
-		PM = player.GetComponent<PlayerMovement>();
-		currentTargetDirection = new Vector3(PM.PlayerFacingDirection.x, 0, PM.PlayerFacingDirection.y);
+		currentTargetDirection = new Vector3(0, 0, 0);
+		MoveCamAction = InputSystem.actions.FindAction("MoveCam");
+	}
+	private void Update()
+	{
+		CamDir = MoveCamAction.ReadValue<Vector2>();
 	}
 
 	private void LateUpdate()
 	{
-		Vector3 newDirection = new Vector3(PM.PlayerFacingDirection.x, 0, PM.PlayerFacingDirection.y);
+		Vector3 newDirection = new Vector3(CamDir.x, 0, CamDir.y);
 		
 		// Only tween when direction actually changes
 		if (newDirection != currentTargetDirection)
@@ -24,8 +28,8 @@ public class CameraStuff : MonoBehaviour
 			// Cancel any existing tween and start new one
 			Tween.LocalPosition(
 				transform, 
-				endValue: newDirection*1.5f, 
-				duration: 1.5f, 
+				endValue: newDirection*3f, 
+				duration: 0.5f, 
 				ease: Ease.InOutSine
 			);
 			

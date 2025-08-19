@@ -13,6 +13,7 @@ TagManager:
   - PlayerHUD
   - CinemachineCam
   - Enemy
+  - RampBlock
   layers:
   - Default
   - TransparentFX
