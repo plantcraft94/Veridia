@@ -6,7 +6,15 @@ public enum Item
 	HookShot,
 	WindFan,
 	BowAndArrow,
-	Bomb
+	Bomb,
+	WingBoot
+}
+
+public enum ArrowElement
+{
+	Normal,
+	Fire,
+	Ice
 }
 public class ItemsController : MonoBehaviour
 {
@@ -36,14 +44,28 @@ public class ItemsController : MonoBehaviour
 	[Header("Bomb")]
 	[SerializeField] GameObject BombObject;
 	GameObject FBomb;
+	[Header("Bow")]
+	[SerializeField] GameObject Arrow;
+	[SerializeField] float Damage;
+	public bool aim = false;
+	float damageMul = 0.25f;
+	[SerializeField] float ArrowSpeed;
+	bool aim1 = false;
+	bool aim2 = false;
+
+	public ArrowElement CurrentArrowElement;
 
 	private void Start()
 	{
 		Slot1 = Item.None;
 		Slot2 = Item.None;
+		CurrentArrowElement = ArrowElement.Normal;
+		
 		ItemSlot1Action = InputSystem.actions.FindAction("ItemSlot1");
 		ItemSlot2Action = InputSystem.actions.FindAction("ItemSlot2");
+		
 		Interacter = transform.GetChild(3).gameObject;
+		
 		PM = GetComponent<PlayerMovement>();
 		PR = GetComponent<PlayerResource>();
 	}
@@ -51,6 +73,23 @@ public class ItemsController : MonoBehaviour
 
 	private void Update()
 	{
+		if (aim)
+		{
+			damageMul += Time.deltaTime;
+			if (damageMul > 1.25f)
+			{
+				damageMul = 1.25f;
+			}
+			if (ItemSlot1Action.WasReleasedThisFrame() && aim1)
+			{
+				ShootArrow();
+			}
+			else if (ItemSlot2Action.WasReleasedThisFrame() && aim2)
+			{
+				ShootArrow();
+			}
+			return;
+		}
 		if (GameManager.Instance.isInInv)
 		{
 			return;
@@ -72,6 +111,10 @@ public class ItemsController : MonoBehaviour
 				case Item.Bomb:
 					Bomb();
 					break;
+				case Item.BowAndArrow:
+					aim = true;
+					aim1 = true;
+					break;
 
 
 				default:
@@ -90,6 +133,10 @@ public class ItemsController : MonoBehaviour
 					break;
 				case Item.Bomb:
 					Bomb();
+					break;
+				case Item.BowAndArrow:
+					aim = true;
+					aim2 = true;
 					break;
 
 
@@ -129,6 +176,26 @@ public class ItemsController : MonoBehaviour
 		{
 			FBomb = Instantiate(BombObject, ProjectileShotLocation.position, Quaternion.identity);
 		}
+	}
+	void ShootArrow()
+	{
+
+		if (PR.ArrowAmount > 0)
+		{
+			var Farrow = Instantiate(Arrow, ProjectileShotLocation.position, Interacter.transform.rotation);
+			Farrow.GetComponent<Arrow>().ArrowType(damageMul, false, CurrentArrowElement);
+			Rigidbody frb = Farrow.GetComponent<Rigidbody>();
+			frb.linearVelocity = ArrowSpeed * new Vector3(PM.PlayerFacingDirection.x, 0, PM.PlayerFacingDirection.y);
+		}
+		else
+		{
+			var Farrow = Instantiate(Arrow, ProjectileShotLocation.position, Interacter.transform.rotation);
+			Farrow.GetComponent<Arrow>().ArrowType(damageMul, true, CurrentArrowElement);
+			Rigidbody frb = Farrow.GetComponent<Rigidbody>();
+			frb.linearVelocity = ArrowSpeed * new Vector3(PM.PlayerFacingDirection.x, 0, PM.PlayerFacingDirection.y);
+		}
+		aim = false;
+		damageMul = 0.25f;
 	}
 
 

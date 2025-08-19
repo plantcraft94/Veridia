@@ -6,6 +6,8 @@ public class PlayerResource : MonoBehaviour
 	public float MaxHealth{ get; private set; }
 	public float Magic { get; private set; }
 	[SerializeField] float MagicGenAmountPerSecond;
+	public float BombAmount;
+	public float ArrowAmount;
 
 	private void Start()
 	{

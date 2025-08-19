@@ -358,7 +358,7 @@ MonoBehaviour:
   GroundLayer:
     serializedVersion: 2
     m_Bits: 64
-  JumpForce: 15
+  JumpForce: 13
   Speed: 6
   isJumping: 0
   MoveAction:
@@ -379,7 +379,17 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+  RunAction:
+    m_Name: Run
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 9fd46373-a733-4eb5-9d28-5be646276837
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
   PlayerFacingDirection: {x: 0, y: 0}
+  RunMultiplyer: 2
 --- !u!114 &5229419112219116029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -439,6 +449,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MagicGenAmountPerSecond: 5
+  BombAmount: 10
+  ArrowAmount: 10
 --- !u!114 &1515073858114157878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -480,6 +492,11 @@ MonoBehaviour:
   WindSpeed: 12
   WindMagicCost: 30
   BombObject: {fileID: 8465303310608056023, guid: fba203e61105d974fae1a9cb9a4c40f3, type: 3}
+  Arrow: {fileID: 3837175505618606921, guid: 702410d0b1352144bbf0d259afa085df, type: 3}
+  Damage: 0
+  aim: 0
+  ArrowSpeed: 15
+  CurrentArrowElement: 0
 --- !u!1 &6522992880300319895
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,6 +12,7 @@ TagManager:
   - Wind
   - PlayerHUD
   - CinemachineCam
+  - Enemy
   layers:
   - Default
   - TransparentFX

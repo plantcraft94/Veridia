@@ -29,21 +29,31 @@ public class PlayerMovement : MonoBehaviour
 	public bool isJumping;
 
 	float MinSpeedMul;
+	bool isSlowed = false;
 
 	[Header("Input")]
 	public InputAction MoveAction;
 	public InputAction JumpAction;
+	public InputAction RunAction;
 
 	[Header("Animaition Stuff")]
 	public Vector2 PlayerFacingDirection;
 	[Header("ItemInteraction")]
 	ItemsController IC;
+	[Header("Boot")]
+	public float RunMultiplyer;
+	bool isRunning = false;
+	Vector2 runStartDirection;
+	bool startRun;
+	Coroutine currentco;
 
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start()
 	{
 		MoveAction = InputSystem.actions.FindAction("Move");
 		JumpAction = InputSystem.actions.FindAction("Jump");
+		RunAction = InputSystem.actions.FindAction("WingBoot");
+
 		rb = GetComponent<Rigidbody>();
 		IC = GetComponent<ItemsController>();
 		PlayerFacingDirection = Vector2.down;
@@ -52,11 +62,11 @@ public class PlayerMovement : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if(GameManager.Instance.isInInv)
+		if (GameManager.Instance.isInInv)
 		{
 			return;
 		}
-		if(IC.HookShoted)
+		if (IC.HookShoted)
 		{
 			rb.linearVelocity = Vector2.zero;
 			return;
@@ -65,6 +75,10 @@ public class PlayerMovement : MonoBehaviour
 		isJumping = !IsGrounded;
 		Input();
 		Movement.Normalize();
+		if (JumpAction.WasPressedThisFrame() && IsGrounded)
+		{
+			rb.linearVelocity = new Vector3(rb.linearVelocity.x, JumpForce, rb.linearVelocity.z);
+		}
 
 		if (SpeedMultipliers.Count() > 0)
 		{
@@ -74,19 +88,46 @@ public class PlayerMovement : MonoBehaviour
 		{
 			MinSpeedMul = 1f;
 		}
-
-		CurrSpeed = Speed * MinSpeedMul;
-
-		targetVelocity = Movement * CurrSpeed;
-		Vector3 velocity = rb.linearVelocity;
-		velocity.x = targetVelocity.x;
-		velocity.z = targetVelocity.z;
-		rb.linearVelocity = velocity;
-
-		if (JumpAction.WasPressedThisFrame() && IsGrounded)
+		isSlowed = SpeedMultipliers.Count() > 0;
+		WingBoot();
+		if (isSlowed)
 		{
-			rb.linearVelocity = new Vector3(rb.linearVelocity.x, JumpForce, rb.linearVelocity.z);
+			CurrSpeed = Speed * MinSpeedMul;
 		}
+		if(runStartDirection != PlayerFacingDirection)
+		{
+			isRunning = false;
+		}
+		if (isRunning)
+		{
+			if (movement != Vector2.zero)
+			{
+				targetVelocity = Movement * Speed * RunMultiplyer;
+			}
+			else
+			{
+				targetVelocity = new Vector3(PlayerFacingDirection.x,0,PlayerFacingDirection.y) * Speed * RunMultiplyer;
+			}
+			Vector3 runvelocity = rb.linearVelocity;
+			runvelocity.x = targetVelocity.x;
+			runvelocity.z = targetVelocity.z;
+			rb.linearVelocity = runvelocity;
+		}
+		if (!isRunning && !isSlowed)
+		{
+			CurrSpeed = Speed;
+		}
+
+		if (!isRunning)
+		{
+			targetVelocity = Movement * CurrSpeed;
+			Vector3 velocity = rb.linearVelocity;
+			velocity.x = targetVelocity.x;
+			velocity.z = targetVelocity.z;
+			rb.linearVelocity = velocity;
+		}
+
+
 	}
 
 	public void SpeedMul(float SpeedModifier)
@@ -106,24 +147,60 @@ public class PlayerMovement : MonoBehaviour
 		}
 		else
 		{
-			if (Mathf.Abs(movement.x) > Mathf.Abs(movement.y))
+			if ((Mathf.Abs(movement.x) > Mathf.Abs(movement.y)) && !IC.aim)
 			{
 				PlayerFacingDirection = new Vector2(Mathf.Sign(movement.x), 0);
+				Debug.Log("Change");
 			}
-			else if (Mathf.Abs(movement.x) < Mathf.Abs(movement.y))
+			else if ((Mathf.Abs(movement.x) < Mathf.Abs(movement.y)) && !IC.aim)
 			{
 				PlayerFacingDirection = new Vector2(0, Mathf.Sign(movement.y));
+				Debug.Log("Change2");
 			}
-			if ((PlayerFacingDirection.x * movement.x < 0) || (PlayerFacingDirection.y * movement.y < 0))
+			if (((PlayerFacingDirection.x * movement.x < 0) || (PlayerFacingDirection.y * movement.y < 0)) && !IC.aim)
 			{
 				PlayerFacingDirection = new Vector2(0, Mathf.Sign(movement.y));
+				Debug.Log("Change3");
 			}
 			Movement = new Vector3(movement.x, 0, movement.y);
 		}
 	}
-	public void StartHook(Vector3 target,GameObject Hook)
+	void WingBoot()
 	{
-		StartCoroutine(HookPlayer(target,Hook));
+		if(GameManager.Instance.HasItem(Item.WingBoot))
+		{
+			if (RunAction.WasPressedThisFrame())
+			{
+				startRun = true;
+			}
+			if (RunAction.WasReleasedThisFrame())
+			{
+				StopCoroutine(currentco);
+				RemoveSpeedMul(0.1f);
+				isRunning = false;
+			}
+		}
+		if(startRun)
+		{
+			if(currentco != null)
+			{
+				StopCoroutine(currentco);
+			}
+			currentco = StartCoroutine(StartRun());
+		}
+	}
+	IEnumerator StartRun()
+	{
+		startRun = false;
+		SpeedMul(0.1f);
+		yield return new WaitForSeconds(1f);
+		runStartDirection = PlayerFacingDirection;
+		RemoveSpeedMul(0.1f);
+		isRunning = true;
+	}
+	public void StartHook(Vector3 target, GameObject Hook)
+	{
+		StartCoroutine(HookPlayer(target, Hook));
 	}
 
 	// Coroutine: Move player to target using Rigidbody.MovePosition
