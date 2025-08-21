@@ -36,6 +36,7 @@ public class AiMovement : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+       
         updateTimer = updateRate;
         SetRandomPatrolPoint();
     }
@@ -100,7 +101,6 @@ public class AiMovement : MonoBehaviour
             }
         }
 
-        // Quay đầu trong trạng thái SEARCH
         if (currentState == State.Search && isRotating)
         {
             transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
