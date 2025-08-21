@@ -1,0 +1,20 @@
+using UnityEngine;
+
+public class ObjectSpawn : MonoBehaviour
+{
+	[SerializeField] GameObject SpawnObject;
+
+	public GameObject CurrentSpawn;
+    private void Start()
+    {
+		Spawn();
+    }
+    public void Spawn()
+	{
+		if(CurrentSpawn != null)
+		{
+			Destroy(CurrentSpawn);
+		}
+		CurrentSpawn = Instantiate(SpawnObject, new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), Quaternion.identity);
+	}
+}

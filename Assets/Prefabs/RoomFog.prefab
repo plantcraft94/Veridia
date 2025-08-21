@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4377518233340303506}
   - component: {fileID: 1404693530712910277}
   - component: {fileID: 6350059954231766459}
+  - component: {fileID: 6244534865461543569}
   m_Layer: 0
   m_Name: RoomFog
   m_TagString: Untagged
@@ -122,3 +123,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ff817e2c80be1646a2d0873de88a906, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6244534865461543569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4572231057727347184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd73fc4e97d7433499a822f21ec9a77d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  State: 0
+  DoorsThatNeedCloseIfChallengeRoom: []
+  ChallengeSpawnPoint: []
+  ChallengeEnemy: []

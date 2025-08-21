@@ -14,6 +14,10 @@ TagManager:
   - CinemachineCam
   - Enemy
   - RampBlock
+  - Chest
+  - PlayerArrow
+  - Door
+  - PlayerSword
   layers:
   - Default
   - TransparentFX

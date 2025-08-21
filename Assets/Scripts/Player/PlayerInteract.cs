@@ -13,9 +13,13 @@ public class PlayerInteract : MonoBehaviour
 
 	public GameObject Interacter;
 
+	public bool isInChestRange;
+	bool isNearChest;
+
 	ThrowableObject TO;
 
 	PlayerMovement PM;
+	public bool IsInteractWithDoor;
 	private void Start()
 	{
 		interactAction = InputSystem.actions.FindAction("Interact");
@@ -45,6 +49,23 @@ public class PlayerInteract : MonoBehaviour
 					TO.Grabbed = 1;
 					IsHolding = true;
 				}
+			}
+			if(hit.collider.gameObject.CompareTag("Door"))
+			{
+				IsInteractWithDoor = interactAction.WasPressedThisFrame();
+			}
+			isNearChest = hit.collider.CompareTag("Chest");
+			if(interactAction.WasPressedThisFrame() && isNearChest)
+			{
+				if(isInChestRange)
+				{
+					hit.collider.gameObject.GetComponent<Chest>().Open();
+				}
+				else if(!isInChestRange)
+				{
+					Debug.Log("Cannot Open on this side :(");
+				}
+				
 			}
 		}
 	}

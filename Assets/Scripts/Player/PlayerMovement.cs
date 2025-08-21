@@ -177,17 +177,14 @@ public class PlayerMovement : MonoBehaviour
 			if ((Mathf.Abs(movement.x) > Mathf.Abs(movement.y)) && !IC.aim)
 			{
 				PlayerFacingDirection = new Vector2(Mathf.Sign(movement.x), 0);
-				Debug.Log("Change");
 			}
 			else if ((Mathf.Abs(movement.x) < Mathf.Abs(movement.y)) && !IC.aim)
 			{
 				PlayerFacingDirection = new Vector2(0, Mathf.Sign(movement.y));
-				Debug.Log("Change2");
 			}
 			if (((PlayerFacingDirection.x * movement.x < 0) || (PlayerFacingDirection.y * movement.y < 0)) && !IC.aim)
 			{
 				PlayerFacingDirection = new Vector2(0, Mathf.Sign(movement.y));
-				Debug.Log("Change3");
 			}
 			Movement = new Vector3(movement.x, 0, movement.y);
 		}

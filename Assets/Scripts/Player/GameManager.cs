@@ -28,14 +28,14 @@ public class GameManager : MonoBehaviour
 	}
 	private void Start()
 	{
-        foreach (Item item in System.Enum.GetValues(typeof(Item)))
-        {
-            if (!ItemPossesion.ContainsKey(item))
-            {
-                ItemPossesion[item] = false;
-            }
-        }
-        ItemPossesion[Item.None] = true;
+		foreach (Item item in System.Enum.GetValues(typeof(Item)))
+		{
+			if (!ItemPossesion.ContainsKey(item))
+			{
+				ItemPossesion[item] = false;
+			}
+		}
+		ItemPossesion[Item.None] = true;
 		cam = GameObject.Find("CinemachineCamera").gameObject;
 		amp = cam.GetComponent<CinemachineBasicMultiChannelPerlin>();
 	}
@@ -47,5 +47,9 @@ public class GameManager : MonoBehaviour
 	{
 		amp.AmplitudeGain = 1f;
 		Tween.Delay(duration: 0.5f, () => { amp.AmplitudeGain = 0f; });
+	}
+	public void ObtainItem(Item item)
+	{
+		ItemPossesion[item] = true;
 	}
 }

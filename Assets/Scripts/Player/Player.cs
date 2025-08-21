@@ -2,14 +2,34 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+	public static Player Instance{ get; set; }
 	Animator anim;
-	PlayerMovement PM;
-	// Start is called once before the first execution of Update after the MonoBehaviour is created
-	void Start()
+	public PlayerMovement PM;
+	public PlayerInteract PI;
+	public PlayerResource PR;
+	public PlayerCommonInventory PCI;
+	public ItemsController IC;
+	private void Awake()
 	{
+		
+		if (Instance == null)
+		{
+			Instance = this;
+		}
+		else
+		{
+			Destroy(gameObject);
+			return;
+		}
+		DontDestroyOnLoad(gameObject);
 		anim = transform.GetChild(0).GetComponent<Animator>();
 		PM = GetComponent<PlayerMovement>();
+		PI = GetComponent<PlayerInteract>();
+		PR = GetComponent<PlayerResource>();
+		PCI = GetComponent<PlayerCommonInventory>();
+		IC = GetComponent<ItemsController>();
 	}
+	// Start is called once before the first execution of Update after the MonoBehaviour is created
 
 	// Update is called once per frame
 	void Update()
