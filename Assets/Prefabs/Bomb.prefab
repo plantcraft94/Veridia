@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3591866638985969345}
   - component: {fileID: 6277238103630563588}
+  - component: {fileID: 5572332400480183498}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -87,6 +88,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &5572332400480183498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5695995018577592563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eadc5458a5168ba4b8d78a97bdf728b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8465303310608056023
 GameObject:
   m_ObjectHideFlags: 0
@@ -117,7 +130,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8465303310608056023}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.5, y: 1, z: -8.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -238,6 +251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 541cf9ab0f4d2614e89d06ee94da8f64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
   ExplodeTimer: 5
   ExplodeEffect: {fileID: 8162552448543195474, guid: a40af852de66d784586a3dd3d0e185b7, type: 3}
   ColorchangeSpeed: 10
@@ -254,4 +268,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Grabbed: 0
+  BreakAfterThrow: 0
   ThrowForce: 15
