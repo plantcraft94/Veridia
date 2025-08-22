@@ -78,18 +78,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "BowSubMenu",
+                    "name": "WingBoot",
                     "type": "Button",
-                    "id": "149d5adc-d61b-43c2-b0a2-49e2d655fa1c",
+                    "id": "60ffd2c9-afae-40ab-af6c-0ff2ca0d7563",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "WingBoot",
+                    "name": "HealthPot",
                     "type": "Button",
-                    "id": "60ffd2c9-afae-40ab-af6c-0ff2ca0d7563",
+                    "id": "9796c8b6-e2d7-40f1-bc3e-4c493dbc2656",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -451,23 +451,23 @@
                 },
                 {
                     "name": "",
-                    "id": "09dd0f03-e430-4c06-9fe5-07116fbe737c",
-                    "path": "<Keyboard>/q",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "BowSubMenu",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "f76c8dcf-c743-4b18-bf70-811cd5c32b22",
                     "path": "<Keyboard>/c",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "WingBoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "94d2a360-f436-46dc-9810-38f5c641081f",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "HealthPot",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

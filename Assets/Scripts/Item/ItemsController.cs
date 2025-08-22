@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 public enum Item
@@ -52,6 +53,10 @@ public class ItemsController : MonoBehaviour
 	[SerializeField] float ArrowSpeed;
 	bool aim1 = false;
 	bool aim2 = false;
+	[Header("HealthPot")]
+	public float HealAmount;
+	InputAction DrinkHealthPotAction;
+	bool isDrinkingHealth;
 
 	public ArrowElement CurrentArrowElement;
 
@@ -63,6 +68,7 @@ public class ItemsController : MonoBehaviour
 		
 		ItemSlot1Action = InputSystem.actions.FindAction("ItemSlot1");
 		ItemSlot2Action = InputSystem.actions.FindAction("ItemSlot2");
+		DrinkHealthPotAction = InputSystem.actions.FindAction("HealthPot");
 		
 		Interacter = transform.GetChild(3).gameObject;
 		
@@ -73,6 +79,10 @@ public class ItemsController : MonoBehaviour
 
 	private void Update()
 	{
+		if(isDrinkingHealth)
+		{
+			return;
+		}
 		if (aim)
 		{
 			damageMul += Time.deltaTime;
@@ -144,8 +154,24 @@ public class ItemsController : MonoBehaviour
 					break;
 			}
 		}
+		else if(DrinkHealthPotAction.WasPressedThisFrame())
+		{
+			if(!isDrinkingHealth)
+			{
+				isDrinkingHealth = true;
+				//start drink health anim
+				PM.SpeedMul(0.2f);
+				StartCoroutine(BeginDrinkHealth());
+			}
+		}
 	}
-
+	IEnumerator BeginDrinkHealth()
+	{
+		yield return new WaitForSeconds(0.5f);
+		PR.AddHealth(HealAmount);
+		isDrinkingHealth = false;
+		PM.RemoveSpeedMul(0.2f);
+	}
 
 	void HookShot()
 	{
