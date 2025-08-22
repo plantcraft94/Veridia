@@ -150,4 +150,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Grabbed: 0
+  BreakAfterThrow: 1
   ThrowForce: 15

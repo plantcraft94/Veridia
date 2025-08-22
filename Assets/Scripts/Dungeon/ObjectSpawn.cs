@@ -5,10 +5,6 @@ public class ObjectSpawn : MonoBehaviour
 	[SerializeField] GameObject SpawnObject;
 
 	public GameObject CurrentSpawn;
-    private void Start()
-    {
-		Spawn();
-    }
     public void Spawn()
 	{
 		if(CurrentSpawn != null)

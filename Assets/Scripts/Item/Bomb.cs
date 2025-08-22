@@ -20,8 +20,7 @@ public class Bomb : MonoBehaviour
 		if (currentTimer >= ExplodeTimer - 1.25f)
 		{
 			float t = Mathf.PingPong(Time.time * ColorchangeSpeed, 1f);
-			sr.color = Color.Lerp(Color.white, new Color(1.000f, 0.490f, 0.490f, 1.000f)
-			, t);
+			sr.color = Color.Lerp(Color.white, new Color(1.000f, 0.490f, 0.490f, 1.000f), t);
 		}
 		if (currentTimer >= ExplodeTimer)
 		{
