@@ -18,6 +18,7 @@ TagManager:
   - PlayerArrow
   - Door
   - PlayerSword
+  - KillPlane
   layers:
   - Default
   - TransparentFX
