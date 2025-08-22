@@ -31,6 +31,7 @@ public class AiMovement : MonoBehaviour
     private bool hasStartedSearch = false;
     private bool hasSetReturnDestination = false;
 
+    private bool isPaused = false;
 
 
     void Start()
@@ -43,6 +44,7 @@ public class AiMovement : MonoBehaviour
 
     void Update()
     {
+        if (isPaused) return;
         updateTimer -= Time.deltaTime;
         if (updateTimer <= 0)
         {
@@ -176,6 +178,24 @@ public class AiMovement : MonoBehaviour
 
         return position.x >= min.x && position.x <= max.x &&
                position.z >= min.z && position.z <= max.z;
+    }
+
+    public void PauseMovement()
+    {
+        if (agent != null)
+        {
+            agent.isStopped = true;
+            isPaused = true;
+        }
+    }
+
+    public void ResumeMovement()
+    {
+        if (agent != null)
+        {
+            agent.isStopped = false;
+            isPaused = false;
+        }
     }
 
     void OnDrawGizmosSelected()
