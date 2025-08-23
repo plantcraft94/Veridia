@@ -56,7 +56,7 @@ public class ItemsController : MonoBehaviour
 	[Header("HealthPot")]
 	public float HealAmount;
 	InputAction DrinkHealthPotAction;
-	bool isDrinkingHealth;
+	bool isDrinkingHealth = false;
 
 	public ArrowElement CurrentArrowElement;
 
@@ -158,10 +158,14 @@ public class ItemsController : MonoBehaviour
 		{
 			if(!isDrinkingHealth)
 			{
-				isDrinkingHealth = true;
-				//start drink health anim
-				PM.SpeedMul(0.2f);
-				StartCoroutine(BeginDrinkHealth());
+				if(PR.HealthPotAmount > 0)
+				{
+					PR.HealthPotAmount -= 1;
+					isDrinkingHealth = true;
+					//start drink health anim
+					PM.SpeedMul(0.2f);
+					StartCoroutine(BeginDrinkHealth());	
+				}
 			}
 		}
 	}

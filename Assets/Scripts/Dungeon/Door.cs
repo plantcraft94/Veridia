@@ -2,6 +2,7 @@ using UnityEngine;
 public class Door : MonoBehaviour
 {
 	Animator anim;
+	public bool InteractWithThisDoor = false;
 	enum DoorType
 	{
 		Normal,
@@ -12,9 +13,17 @@ public class Door : MonoBehaviour
 	private void Start()
 	{
 		anim = GetComponent<Animator>();
+		if(Type == DoorType.Lock || Type == DoorType.Boss)
+		{
+			CloseDoor();
+		}
 	}
 	private void Update()
 	{
+		if(!InteractWithThisDoor)
+		{
+			return;
+		}
 		switch (Type)
 		{
 			case DoorType.Normal:
@@ -35,6 +44,7 @@ public class Door : MonoBehaviour
 		{
 			if(DungeonManager.Instance.KeyAmount > 0)
 			{
+				DungeonManager.Instance.KeyAmount--;
 				Type = DoorType.Normal;
 				OpenDoor();
 			}
@@ -43,6 +53,7 @@ public class Door : MonoBehaviour
 				Debug.Log("This door need a key to unlock");
 			}
 		}
+		InteractWithThisDoor = false;
 	}
 	void BossDoor()
 	{
@@ -50,6 +61,7 @@ public class Door : MonoBehaviour
 		{
 			if(DungeonManager.Instance.BossKeyAmount > 0)
 			{
+				DungeonManager.Instance.BossKeyAmount--;
 				Type = DoorType.Normal;
 				OpenDoor();
 			}
@@ -58,12 +70,12 @@ public class Door : MonoBehaviour
 				Debug.Log("This door need a boss key to unlock");
 			}
 		}
+		InteractWithThisDoor = false;
 	}
 	public void OpenDoor()
 	{
 		if(Type == DoorType.Normal)
 		{
-			
 			anim.SetBool("IsOpen", true);
 		}
 	}

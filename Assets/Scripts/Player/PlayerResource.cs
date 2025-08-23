@@ -6,13 +6,16 @@ public class PlayerResource : MonoBehaviour
 	public float MaxHealth{ get; private set; }
 	public float Magic { get; private set; }
 	[SerializeField] float MagicGenAmountPerSecond;
-	public float BombAmount;
-	public float ArrowAmount;
+	public int BombAmount;
+	public int ArrowAmount;
+	public int HealthPotAmount;
+	public int MaxHealthPotAmount;
 
 	private void Start()
 	{
 		MaxHealth = 100f;
 		Health = MaxHealth;
+		HealthPotAmount = MaxHealthPotAmount;
 	}
 	private void Update()
 	{

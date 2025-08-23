@@ -53,6 +53,10 @@ public class PlayerInteract : MonoBehaviour
 			if(hit.collider.gameObject.CompareTag("Door"))
 			{
 				IsInteractWithDoor = interactAction.WasPressedThisFrame();
+				if(IsInteractWithDoor)
+				{
+					hit.collider.gameObject.GetComponent<Door>().InteractWithThisDoor = true;
+				}
 			}
 			isNearChest = hit.collider.CompareTag("Chest");
 			if(interactAction.WasPressedThisFrame() && isNearChest)

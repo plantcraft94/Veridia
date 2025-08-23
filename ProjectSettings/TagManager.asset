@@ -18,7 +18,6 @@ TagManager:
   - PlayerArrow
   - Door
   - PlayerSword
-  - KillPlane
   layers:
   - Default
   - TransparentFX
@@ -29,7 +28,7 @@ TagManager:
   - Ground
   - Hook
   - Enemy
-  - 
+  - KillPlane
   - 
   - 
   - 

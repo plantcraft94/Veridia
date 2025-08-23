@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 1172971647127689742}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.494, z: 0}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -58,7 +58,7 @@ Transform:
   m_GameObject: {fileID: 1674804639432247087}
   serializedVersion: 2
   m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: 0.358, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -142,7 +142,6 @@ GameObject:
   - component: {fileID: 5215223168215031409}
   - component: {fileID: 4960208477944540960}
   - component: {fileID: 6549529111197527229}
-  - component: {fileID: 7078499292730468370}
   m_Layer: 8
   m_Name: Sphere
   m_TagString: Untagged
@@ -218,27 +217,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &7078499292730468370
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3160475211945592424}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7395531842707783552
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,6 +232,7 @@ GameObject:
   - component: {fileID: 293526099514421333}
   - component: {fileID: 7692214222544308936}
   - component: {fileID: 2624469888477202704}
+  - component: {fileID: 4546143829328611806}
   m_Layer: 8
   m_Name: Slime1
   m_TagString: Enemy
@@ -361,10 +340,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27dfd89f45e023a4699ca7fa74e42f5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 7
-  lockTime: 2
-  jumpForce: 12
+  attackRange: 3
+  lockTime: 1
+  jumpForce: 30
   damage: 10
+  attackCooldown: 2
   playerLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -419,3 +399,24 @@ NavMeshAgent:
   m_BaseOffset: 0.2
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 3
+--- !u!135 &4546143829328611806
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7395531842707783552}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}

@@ -82,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
 		{
 			if(isRunning)
 			{
-				rb.linearVelocity = new Vector3(rb.linearVelocity.x, 15.5f, rb.linearVelocity.z);
+				rb.linearVelocity = new Vector3(rb.linearVelocity.x, 15f, rb.linearVelocity.z);
 			}
 			else
 			{		
