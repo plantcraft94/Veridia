@@ -204,7 +204,7 @@ public class ItemsController : MonoBehaviour
 	{
 		if (FBomb == null)
 		{
-			FBomb = Instantiate(BombObject, ProjectileShotLocation.position, Quaternion.identity);
+			FBomb = Instantiate(BombObject, ProjectileShotLocation.position, BombObject.transform.rotation);
 		}
 	}
 	void ShootArrow()
