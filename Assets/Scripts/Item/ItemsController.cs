@@ -47,7 +47,7 @@ public class ItemsController : MonoBehaviour
 	GameObject FBomb;
 	[Header("Bow")]
 	[SerializeField] GameObject Arrow;
-	[SerializeField] float Damage;
+	public float ArrowDamage;
 	public bool aim = false;
 	float damageMul = 0.25f;
 	[SerializeField] float ArrowSpeed;

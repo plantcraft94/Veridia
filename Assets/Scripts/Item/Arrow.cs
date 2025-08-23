@@ -4,7 +4,7 @@ public class Arrow : MonoBehaviour
 	float DamageMul;
 	bool MagicArrow;
 	ArrowElement type;
-	private void Start()
+    private void Start()
 	{
 		Destroy(gameObject, 10f);// failsafe
 	}
@@ -32,7 +32,7 @@ public class Arrow : MonoBehaviour
 			switch (type)
 			{
 				case ArrowElement.Normal:
-					Debug.Log("Enemy hit" + " " + DamageMul);
+					collision.gameObject.GetComponent<AiHealth>().TakeDamage(Player.Instance.IC.ArrowDamage * DamageMul);
 					break;
 				case ArrowElement.Fire:
 					Debug.Log("Enemy hit + burn" + " " + DamageMul);
