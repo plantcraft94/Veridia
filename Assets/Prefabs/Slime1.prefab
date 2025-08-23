@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3147046858441027118}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 4637164853198646245}
   - component: {fileID: 1748131560320356412}
   - component: {fileID: 8494717695402445350}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143,7 +143,7 @@ GameObject:
   - component: {fileID: 4960208477944540960}
   - component: {fileID: 6549529111197527229}
   - component: {fileID: 7078499292730468370}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -254,7 +254,7 @@ GameObject:
   - component: {fileID: 293526099514421333}
   - component: {fileID: 7692214222544308936}
   - component: {fileID: 2624469888477202704}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Slime1
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -344,7 +344,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sensor: {fileID: 2308005450622864018}
   updateRate: 0.5
-  patrolCenter: {x: 0, y: 0, z: 0}
+  patrolCenter: {x: 10.984502, y: 1.0000005, z: 7.5373054}
   patrolSize: {x: 5, y: 0, z: 5}
   patrolPointReachedThreshold: 1
   searchDuration: 3

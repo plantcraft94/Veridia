@@ -5,16 +5,17 @@ using System.Collections;
 public class AiAttack : MonoBehaviour
 {
     [Header("Attack Settings")]
-    public float attackRange = 2f;          // khoảng cách bắt đầu charge
-    public float lockTime = 2f;             // thời gian ghim mục tiêu trước khi nhảy
-    public float jumpForce = 12f;           // lực nhảy
-    public int damage = 10;                 // damage gây ra
+    public float attackRange = 2f;
+    public float lockTime = 2f;
+    public float jumpForce = 12f;
+    public int damage = 10;
+    public float attackCooldown = 2f;
 
     [Header("References")]
     public LayerMask playerLayer;
     public Transform groundCheck;
     public LayerMask groundLayer;
-    public AiMovement aiMovement;           // tham chiếu tới script di chuyển
+    public AiMovement aiMovement;
 
     private Transform player;
     private Rigidbody rb;
@@ -23,6 +24,8 @@ public class AiAttack : MonoBehaviour
     private bool isCharging = false;
     private bool isJumping = false;
     private Vector3 lockedTargetPos;
+
+    private float lastAttackTime = -Mathf.Infinity;
 
     void Start()
     {
@@ -34,13 +37,11 @@ public class AiAttack : MonoBehaviour
 
     void Update()
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, 0.2f, groundLayer);
+        isGrounded = Physics.CheckSphere(groundCheck.position, 0.25f, groundLayer);
 
-        // chỉ check tấn công khi không tấn công trước đó
-        if (!isCharging && !isJumping)
+        if (!isCharging && !isJumping && Time.time >= lastAttackTime + attackCooldown)
         {
             float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-
             if (distanceToPlayer <= attackRange)
             {
                 StartCoroutine(ChargeAndJump());
@@ -50,39 +51,40 @@ public class AiAttack : MonoBehaviour
 
     IEnumerator ChargeAndJump()
     {
+        Debug.Log("ChargeAndJump started");
         isCharging = true;
         rb.linearVelocity = Vector3.zero;
+        aiMovement.PauseMovement();
 
-        // khoá AI movement khi charge
-        if (aiMovement != null)
-            aiMovement.enabled = false;
-
-        // ghim vị trí player
         lockedTargetPos = player.position;
-
-        // chờ lockTime giây (Player có thể di chuyển tránh)
         yield return new WaitForSeconds(lockTime);
 
-        // bắt đầu nhảy
-        if (isGrounded)
-        {
-            isJumping = true;
-            Vector3 dir = (lockedTargetPos - transform.position).normalized;
-            Vector3 jumpDir = new Vector3(dir.x, 1f, dir.z).normalized;
-            rb.AddForce(jumpDir * jumpForce, ForceMode.Impulse);
-        }
+        Debug.Log("Attempt jump");
+        isJumping = true;
 
-        // chờ slime hạ xuống đất
-        while (!isGrounded)
-        {
-            yield return null;
-        }
+        aiMovement.DisableAgent();
 
-        // kết thúc tấn công → mở lại AI movement
+        Vector3 toTarget = lockedTargetPos - transform.position;
+
+        Vector3 horizontalDir = toTarget;
+        horizontalDir.y = 0f;
+        horizontalDir.Normalize();
+
+        float jumpHorizontalForce = jumpForce;
+        float jumpVerticalForce = jumpForce * 0.8f;
+
+        Vector3 jumpVector = horizontalDir * jumpHorizontalForce + Vector3.up * jumpVerticalForce;
+
+        rb.linearVelocity = Vector3.zero;
+        rb.AddForce(jumpVector, ForceMode.Impulse);
+
+        yield return new WaitUntil(() => Physics.CheckSphere(groundCheck.position, 0.25f, groundLayer));
+
         isJumping = false;
         isCharging = false;
-        if (aiMovement != null)
-            aiMovement.enabled = true;
+        lastAttackTime = Time.time; 
+        aiMovement.EnableAgent();
+        aiMovement.ResumeMovement();
     }
 
     void OnCollisionEnter(Collision collision)

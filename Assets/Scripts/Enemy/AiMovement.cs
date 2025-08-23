@@ -203,4 +203,20 @@ public class AiMovement : MonoBehaviour
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireCube(patrolCenter, patrolSize);
     }
+
+    public void DisableAgent()
+    {
+        if (agent != null)
+        {
+            agent.enabled = false;
+        }
+    }
+
+    public void EnableAgent()
+    {
+        if (agent != null)
+        {
+            agent.enabled = true;
+        }
+    }
 }
