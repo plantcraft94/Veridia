@@ -455,7 +455,7 @@ MonoBehaviour:
   BombAmount: 10
   ArrowAmount: 10
   HealthPotAmount: 0
-  MaxHealthPotAmount: 1
+  MaxHealthPotAmount: 3
 --- !u!114 &1515073858114157878
 MonoBehaviour:
   m_ObjectHideFlags: 0
