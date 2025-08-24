@@ -24,7 +24,7 @@ public class ArrowContainer : MonoBehaviour
 			}
 			else if (!GameManager.Instance.HasItem(Item.BowAndArrow) && image != null)
 			{
-				image.sprite = ItemSprite.Instance.SpriteArrow[ArrowElement.Normal];
+				image.sprite = ItemSprite.Instance.SpriteItem[Item.None];
 			}
 		}
 	}
