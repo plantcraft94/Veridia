@@ -300,6 +300,7 @@ GameObject:
   - component: {fileID: 5698898533352583652}
   - component: {fileID: 1515073858114157878}
   - component: {fileID: 4013413969766074546}
+  - component: {fileID: 1627514962527500057}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -497,7 +498,7 @@ MonoBehaviour:
   WindMagicCost: 30
   BombObject: {fileID: 8465303310608056023, guid: fba203e61105d974fae1a9cb9a4c40f3, type: 3}
   Arrow: {fileID: 3837175505618606921, guid: 702410d0b1352144bbf0d259afa085df, type: 3}
-  Damage: 0
+  ArrowDamage: 15
   aim: 0
   ArrowSpeed: 15
   HealAmount: 75
@@ -523,6 +524,18 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1627514962527500057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5720673260317752035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f91e2f8c3858c4a448c8a0161f14e597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6522992880300319895
 GameObject:
   m_ObjectHideFlags: 0
