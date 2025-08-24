@@ -33,6 +33,8 @@ public class AiMovement : MonoBehaviour
 
     private bool isPaused = false;
 
+    public bool isChasing => currentState == State.Chase;
+
 
     void Start()
     {

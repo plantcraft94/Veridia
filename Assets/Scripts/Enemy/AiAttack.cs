@@ -23,6 +23,8 @@ public class AiAttack : MonoBehaviour
     private bool isGrounded;
     private bool isCharging = false;
     private bool isJumping = false;
+    private bool hasDealtDamage = false;
+
     private Vector3 lockedTargetPos;
 
     private float lastAttackTime = -Mathf.Infinity;
@@ -42,7 +44,7 @@ public class AiAttack : MonoBehaviour
         if (!isCharging && !isJumping && Time.time >= lastAttackTime + attackCooldown)
         {
             float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-            if (distanceToPlayer <= attackRange)
+            if (distanceToPlayer <= attackRange && aiMovement.isChasing)
             {
                 StartCoroutine(ChargeAndJump());
             }
@@ -61,44 +63,46 @@ public class AiAttack : MonoBehaviour
 
         Debug.Log("Attempt jump");
         isJumping = true;
-
+        hasDealtDamage = false; 
         aiMovement.DisableAgent();
 
         Vector3 toTarget = lockedTargetPos - transform.position;
-
         Vector3 horizontalDir = toTarget;
         horizontalDir.y = 0f;
         horizontalDir.Normalize();
 
         float jumpHorizontalForce = jumpForce;
-        float jumpVerticalForce = jumpForce * 0.8f;
+        float jumpVerticalForce = jumpForce * 1.8f;
 
         Vector3 jumpVector = horizontalDir * jumpHorizontalForce + Vector3.up * jumpVerticalForce;
 
         rb.linearVelocity = Vector3.zero;
         rb.AddForce(jumpVector, ForceMode.Impulse);
 
-        yield return new WaitUntil(() => Physics.CheckSphere(groundCheck.position, 0.25f, groundLayer));
+        yield return new WaitUntil(() => Physics.CheckSphere(groundCheck.position, 0.05f, groundLayer));
 
-        isJumping = false;
         isCharging = false;
-        lastAttackTime = Time.time; 
+        lastAttackTime = Time.time;
         aiMovement.EnableAgent();
         aiMovement.ResumeMovement();
+
+        yield return null;
+        isJumping = false; 
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        if (isJumping && collision.collider.CompareTag("Player"))
+        Debug.Log("Collision detected with: " + collision.collider.name);
+        if (!hasDealtDamage && collision.collider.CompareTag("Player"))
         {
             PlayerResource playerRes = collision.collider.GetComponent<PlayerResource>();
-            if (playerRes != null)
-            {
+            
+                Debug.Log("Dealing damage to player");
                 playerRes.DamageHealth(damage);
-            }
+                hasDealtDamage = true;
+            
         }
     }
-
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
