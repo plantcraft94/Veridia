@@ -19,6 +19,7 @@ TagManager:
   - Door
   - PlayerSword
   - EnemyArrow
+  - Bomb
   layers:
   - Default
   - TransparentFX

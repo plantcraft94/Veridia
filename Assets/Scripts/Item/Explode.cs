@@ -19,7 +19,7 @@ public class Explode : MonoBehaviour
 		{
 			if(other.gameObject.CompareTag("Enemy"))
 			{
-				other.gameObject.GetComponent<AiHealth>().TakeDamage(25f);
+				other.gameObject.GetComponent<AiHealth>().TakeDamage(25f, gameObject);
 			}
 			if(other.gameObject.CompareTag("Player"))
 			{

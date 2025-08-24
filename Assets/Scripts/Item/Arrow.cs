@@ -32,7 +32,7 @@ public class Arrow : MonoBehaviour
 			switch (type)
 			{
 				case ArrowElement.Normal:
-					collision.gameObject.GetComponent<AiHealth>().TakeDamage(Player.Instance.IC.ArrowDamage * DamageMul);
+					collision.gameObject.GetComponent<AiHealth>().TakeDamage(Player.Instance.IC.ArrowDamage * DamageMul, gameObject);
 					break;
 				case ArrowElement.Fire:
 					Debug.Log("Enemy hit + burn" + " " + DamageMul);

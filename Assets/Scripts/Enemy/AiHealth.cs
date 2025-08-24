@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Events;
 
 public class AiHealth : MonoBehaviour
@@ -16,13 +17,29 @@ public class AiHealth : MonoBehaviour
     public int minDrop = 1;
     public int maxDrop = 2;
 
+    [Header("Damage Sources Allowed")]
+    public List<string> allowedDamageTags = new List<string>() { "PlayerSword", "PlayerArrow", "Bomb" };
+    public bool TakeDamageFromThrowable = true;
     private void Awake()
     {
         currentHealth = maxHealth;
     }
 
-    public void TakeDamage(float amount)
+    public void TakeDamage(float amount, GameObject damageSource)
     {
+        if (damageSource != null)
+        {
+            string sourceTag = damageSource.tag;
+            if (!allowedDamageTags.Contains(sourceTag))
+            {
+                if(TakeDamageFromThrowable == false || damageSource.GetComponent<ThrowableObject>() == null)
+                {
+                    Debug.Log("nana");
+                    return;
+                }
+            }
+        }
+
         currentHealth -= amount;
         if (onDamage != null) onDamage.Invoke();
 
