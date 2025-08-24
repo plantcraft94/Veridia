@@ -49,10 +49,12 @@ public class PlayerMovement : MonoBehaviour
 	Coroutine currentco;
 	public GameObject Interacter;
 	public UnityEvent Crash;
+	PlayerAttack playerAttack;
 
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start()
 	{
+		playerAttack = GetComponent<PlayerAttack>();
 		MoveAction = InputSystem.actions.FindAction("Move");
 		JumpAction = InputSystem.actions.FindAction("Jump");
 		RunAction = InputSystem.actions.FindAction("WingBoot");
@@ -72,6 +74,11 @@ public class PlayerMovement : MonoBehaviour
 		if (IC.HookShoted)
 		{
 			rb.linearVelocity = Vector2.zero;
+			return;
+		}
+		if(playerAttack.isSlashing)
+		{
+			rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
 			return;
 		}
 		bool IsGrounded = Physics.CheckBox(GroundCheckObject.position, new Vector3(0.5f, 0.1f, 0.5f), Quaternion.identity, GroundLayer);

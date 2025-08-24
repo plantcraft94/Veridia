@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class RoomStateManager : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class RoomStateManager : MonoBehaviour
 	public List<GameObject> DoorsThatNeedCloseIfChallengeRoom = new List<GameObject>();
 	public List<GameObject> ChallengeSpawnPoint = new List<GameObject>();
 	public List<GameObject> ChallengeEnemy = new List<GameObject>();
+	public UnityEvent OnRoomClear;
 	bool playerInside = false;
 	bool DoorIsClosed = false;
 
@@ -60,6 +62,7 @@ public class RoomStateManager : MonoBehaviour
 	{
 		DungeonManager.Instance.IsInChallenge = false;
 		State = RoomState.Normal;
+		OnRoomClear.Invoke();
 		foreach (GameObject Door in DoorsThatNeedCloseIfChallengeRoom)
 		{
 			Door.GetComponent<Door>().OpenDoor();
