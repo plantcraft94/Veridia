@@ -26,7 +26,6 @@ public class AiAttack : MonoBehaviour
     private bool hasDealtDamage = false;
 
     private Vector3 lockedTargetPos;
-
     private float lastAttackTime = -Mathf.Infinity;
 
     void Start()
@@ -63,7 +62,7 @@ public class AiAttack : MonoBehaviour
 
         Debug.Log("Attempt jump");
         isJumping = true;
-        hasDealtDamage = false; 
+        hasDealtDamage = false;
         aiMovement.DisableAgent();
 
         Vector3 toTarget = lockedTargetPos - transform.position;
@@ -72,7 +71,7 @@ public class AiAttack : MonoBehaviour
         horizontalDir.Normalize();
 
         float jumpHorizontalForce = jumpForce;
-        float jumpVerticalForce = jumpForce * 1.8f;
+        float jumpVerticalForce = jumpForce * 0.4f;
 
         Vector3 jumpVector = horizontalDir * jumpHorizontalForce + Vector3.up * jumpVerticalForce;
 
@@ -81,13 +80,18 @@ public class AiAttack : MonoBehaviour
 
         yield return new WaitUntil(() => Physics.CheckSphere(groundCheck.position, 0.05f, groundLayer));
 
-        isCharging = false;
-        lastAttackTime = Time.time;
+        yield return new WaitForSeconds(0.1f);
+        rb.linearVelocity = Vector3.zero;
+
         aiMovement.EnableAgent();
+        aiMovement.GetComponent<UnityEngine.AI.NavMeshAgent>().Warp(transform.position);
         aiMovement.ResumeMovement();
 
+        isCharging = false;
+        lastAttackTime = Time.time;
+
         yield return null;
-        isJumping = false; 
+        isJumping = false;
     }
 
     void OnCollisionEnter(Collision collision)
@@ -96,13 +100,15 @@ public class AiAttack : MonoBehaviour
         if (!hasDealtDamage && collision.collider.CompareTag("Player"))
         {
             PlayerResource playerRes = collision.collider.GetComponent<PlayerResource>();
-            
+            if (playerRes != null)
+            {
                 Debug.Log("Dealing damage to player");
                 playerRes.DamageHealth(damage);
                 hasDealtDamage = true;
-            
+            }
         }
     }
+
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
