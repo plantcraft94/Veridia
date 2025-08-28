@@ -9,7 +9,7 @@ public class ArrowContainer : MonoBehaviour
 	ItemsController IC;
 
 	Image image;
-	private void Awake()
+	private void Start()
 	{
 		IC = GameObject.FindGameObjectWithTag("Player").GetComponent<ItemsController>();
 		image = transform.GetChild(0).GetComponent<Image>();
