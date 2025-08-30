@@ -32,7 +32,6 @@ public class PressurePlate : MonoBehaviour
 		{
 			if (pressureType == PressureType.Hold)
 			{
-				Debug.Log("testt");
 				OnStep.Invoke();
 				if (!NoObject)
 				{
