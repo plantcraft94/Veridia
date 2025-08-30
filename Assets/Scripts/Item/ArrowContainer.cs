@@ -50,7 +50,7 @@ public class ArrowContainer : MonoBehaviour,ISelectHandler
 		{
 			des.ChangeDescription(itemData.ItemName, itemData.itemDescription, itemData.CustomInput,itemData.inputPrompt);
 		}
-		else
+		else if(!GameManager.Instance.HasItem(Item.BowAndArrow) || itemData == null)
 		{
 			des.ChangeDescription("", "", false,itemData.inputPrompt);
 		}

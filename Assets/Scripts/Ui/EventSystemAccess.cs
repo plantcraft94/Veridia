@@ -10,8 +10,11 @@ public class EventSystemAccess : MonoBehaviour
 	private void Start()
 	{
 		if (eventSystem == null)
-			return;
+			eventSystem = EventSystem.current;
 
-        eventSystem.SetSelectedGameObject(firstItemToSelect.gameObject);
+		if (eventSystem == null || firstItemToSelect == null) return;
+
+		eventSystem.SetSelectedGameObject(null);
+		eventSystem.SetSelectedGameObject(firstItemToSelect.gameObject);
 	}
 }

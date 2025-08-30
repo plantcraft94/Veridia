@@ -1,15 +1,17 @@
+using PrimeTween;
 using UnityEngine;
 using UnityEngine.InputSystem;
+
 
 public class UiController : MonoBehaviour
 {
 	[Header("Inventory_Item")]
 	[SerializeField] GameObject ItemInventory;
 	InputAction OpenInv;
-	private void Start()
+	private void Start()	
 	{
 		OpenInv = InputSystem.actions.FindAction("OpenInventory");
-		ItemInventory.SetActive(false);
+		Tween.Delay(0.005f, () => ItemInventory.SetActive(false));
 	}
 	private void Update()
 	{
