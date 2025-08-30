@@ -27,4 +27,15 @@ public class TextSetter : MonoBehaviour
 		}
 		textBox.text = CompleteText.ReadAndReplaceBinding(message, Iaction.action.bindings[(int)InputPromptManager.Instance.controlType], listOfTMPSpriteAssets.SpriteAssets[(int)InputPromptManager.Instance.controlType]);
 	}
+	public void ChangeMessage(string newmessage)
+	{
+		message = newmessage;
+		SetText();
+	}
+	public void ChangeMessageInput(string newmessage, InputActionReference newinput)
+	{
+		message = newmessage;
+		Iaction = newinput;
+		SetText();
+	}
 }

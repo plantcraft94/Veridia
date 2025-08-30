@@ -8,7 +8,10 @@ public enum Item
 	WindFan,
 	BowAndArrow,
 	Bomb,
-	WingBoot
+	WingBoot,
+	Sword,
+	Shield,
+	HealthPot
 }
 
 public enum ArrowElement

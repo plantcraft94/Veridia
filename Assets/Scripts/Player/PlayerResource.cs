@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerResource : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class PlayerResource : MonoBehaviour
 	public int ArrowAmount;
 	public int HealthPotAmount;
 	public int MaxHealthPotAmount;
+	public UnityEvent OnDeath;
 
 	private void Start()
 	{
@@ -45,6 +47,7 @@ public class PlayerResource : MonoBehaviour
 		Health -= amount;
 		if(Health <= 0)
 		{
+			OnDeath.Invoke();
 			Debug.Log("Ded Ded");
 		}
 	}

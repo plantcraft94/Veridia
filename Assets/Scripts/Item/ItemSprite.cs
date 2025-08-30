@@ -9,6 +9,8 @@ public class ItemSprite : MonoBehaviour
 	public SerializedDictionary<Item, Sprite> SpriteItem;
 	[SerializedDictionary("ArrowElement", "Sprite")]
 	public SerializedDictionary<ArrowElement, Sprite> SpriteArrow;
+	[SerializedDictionary("DungeonItem", "Sprite")]
+	public SerializedDictionary<DungeonItems, Sprite> SpriteDungeonItem;
 	private void Awake()
 	{
 		if (Instance == null)

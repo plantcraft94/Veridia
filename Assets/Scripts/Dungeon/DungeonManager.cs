@@ -38,6 +38,10 @@ public class DungeonManager : MonoBehaviour
 	{
 		PlayerGameObject.transform.position = pos;
 	}
+	public void PlayerDiedInDungeon()
+	{
+		TpPlayer(FirstCheckPoint.position);
+	}
 	public void ObtainDungeonItem(DungeonItems item)
 	{
 		switch (item)
