@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ItemContainer : MonoBehaviour,ISelectHandler
+public class ItemContainer : MonoBehaviour, ISelectHandler
 {
 	[SerializeField] ItemData itemData;
 	public Item ChangeItemTo;
@@ -15,12 +15,12 @@ public class ItemContainer : MonoBehaviour,ISelectHandler
 	}
 	private void OnEnable()
 	{
-		if(des == null)
+		if (des == null)
 		{
 			des = GameObject.Find("Description").GetComponent<Description>();
 		}
-		if(GameManager.Instance != null)
-		{	
+		if (GameManager.Instance != null)
+		{
 			if (GameManager.Instance.HasItem(ChangeItemTo))
 			{
 				image.sprite = ItemSprite.Instance.SpriteItem[ChangeItemTo];
@@ -41,13 +41,13 @@ public class ItemContainer : MonoBehaviour,ISelectHandler
 	}
 	public void OnSelect(BaseEventData eventData)
 	{
-		if(GameManager.Instance.HasItem(ChangeItemTo))
+		if (GameManager.Instance.HasItem(ChangeItemTo))
 		{
-			des.ChangeDescription(itemData.ItemName, itemData.itemDescription, itemData.CustomInput,itemData.inputPrompt);
+			des.ChangeDescription(itemData.ItemName, itemData.itemDescription, itemData.CustomInput, itemData.inputPrompt);
 		}
-		else
+		else if (itemData == null || !GameManager.Instance.HasItem(ChangeItemTo))
 		{
-			des.ChangeDescription("", "", false,itemData.inputPrompt);
+			des.ChangeDescription("", "", false, itemData.inputPrompt);
 		}
 	}
 }

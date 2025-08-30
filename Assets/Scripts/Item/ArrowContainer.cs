@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ArrowContainer : MonoBehaviour,ISelectHandler
+public class ArrowContainer : MonoBehaviour, ISelectHandler
 {
 	[SerializeField] ItemData itemData;
 	public ArrowElement ChangeElementTo;
@@ -17,7 +17,7 @@ public class ArrowContainer : MonoBehaviour,ISelectHandler
 	}
 	private void OnEnable()
 	{
-		if(des == null)
+		if (des == null)
 		{
 			des = GameObject.Find("Description").GetComponent<Description>();
 		}
@@ -39,20 +39,20 @@ public class ArrowContainer : MonoBehaviour,ISelectHandler
 		{
 			IC.CurrentArrowElement = ChangeElementTo;
 		}
-		else
+		else if (itemData == null || !GameManager.Instance.HasItem(Item.BowAndArrow))
 		{
 			IC.CurrentArrowElement = ArrowElement.Normal;
 		}
 	}
 	public void OnSelect(BaseEventData eventData)
 	{
-		if(GameManager.Instance.HasItem(Item.BowAndArrow))
+		if (GameManager.Instance.HasItem(Item.BowAndArrow))
 		{
-			des.ChangeDescription(itemData.ItemName, itemData.itemDescription, itemData.CustomInput,itemData.inputPrompt);
+			des.ChangeDescription(itemData.ItemName, itemData.itemDescription, itemData.CustomInput, itemData.inputPrompt);
 		}
-		else if(!GameManager.Instance.HasItem(Item.BowAndArrow) || itemData == null)
+		else if (!GameManager.Instance.HasItem(Item.BowAndArrow) || itemData == null)
 		{
-			des.ChangeDescription("", "", false,itemData.inputPrompt);
+			des.ChangeDescription("", "", false, itemData.inputPrompt);
 		}
 	}
 }

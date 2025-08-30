@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CustomInputItems : MonoBehaviour,ISelectHandler
+public class CustomInputItems : MonoBehaviour, ISelectHandler
 {
 	[SerializeField] ItemData itemData;
 	public Item item;
@@ -15,12 +15,12 @@ public class CustomInputItems : MonoBehaviour,ISelectHandler
 	}
 	private void OnEnable()
 	{
-		if(des == null)
+		if (des == null)
 		{
 			des = GameObject.Find("Description").GetComponent<Description>();
 		}
-		if(GameManager.Instance != null)
-		{	
+		if (GameManager.Instance != null)
+		{
 			if (GameManager.Instance.HasItem(item))
 			{
 				image.sprite = ItemSprite.Instance.SpriteItem[item];
@@ -33,13 +33,13 @@ public class CustomInputItems : MonoBehaviour,ISelectHandler
 	}
 	public void OnSelect(BaseEventData eventData)
 	{
-		if(GameManager.Instance.HasItem(item))
+		if (GameManager.Instance.HasItem(item))
 		{
-			des.ChangeDescription(itemData.ItemName, itemData.itemDescription, itemData.CustomInput,itemData.inputPrompt);
+			des.ChangeDescription(itemData.ItemName, itemData.itemDescription, itemData.CustomInput, itemData.inputPrompt);
 		}
-		else if(!GameManager.Instance.HasItem(item) || itemData == null)
+		else if (itemData == null || !GameManager.Instance.HasItem(item))
 		{
-			des.ChangeDescription("", "", false,itemData.inputPrompt);
+			des.ChangeDescription("", "", false, itemData.inputPrompt);
 		}
 	}
 }
