@@ -11,6 +11,8 @@ public class AiSensor : MonoBehaviour
     public float angle = 30;
     public float height = 1.0f;
     public Color meshColor = Color.red;
+    [Header("Sensor Offset")]
+    public float verticalOffset = 0f;
 
     public int scanFrequency = 30;
     public LayerMask layers;
@@ -40,10 +42,11 @@ public class AiSensor : MonoBehaviour
 
     private void Scan()
     {
-        count = Physics.OverlapSphereNonAlloc(transform.position, distance, colliders, layers, QueryTriggerInteraction.Collide);
+        Vector3 origin = transform.position + new Vector3(0, verticalOffset, 0);
+        count = Physics.OverlapSphereNonAlloc(origin, distance, colliders, layers, QueryTriggerInteraction.Collide);
 
         Objects.Clear();
-        for(int i=0; i<count; i++)
+        for (int i = 0; i < count; i++)
         {
             GameObject obj = colliders[i].gameObject;
             if (IsInSight(obj))
@@ -53,9 +56,10 @@ public class AiSensor : MonoBehaviour
         }
     }
 
+
     public bool IsInSight(GameObject obj)
     {
-        Vector3 origin = transform.position;
+        Vector3 origin = transform.position + new Vector3(0, verticalOffset, 0);
         Vector3 dest = obj.transform.position;
         Vector3 direction = dest - origin;
 
@@ -66,20 +70,21 @@ public class AiSensor : MonoBehaviour
 
         direction.y = 0;
         float deltaAngle = Vector3.Angle(direction, transform.forward);
-        if(deltaAngle > angle)
+        if (deltaAngle > angle)
         {
             return false;
         }
 
         origin.y += height / 2;
         dest.y = origin.y;
-        if(Physics.Linecast(origin, dest, occlusionLayer))
+        if (Physics.Linecast(origin, dest, occlusionLayer))
         {
             return false;
         }
 
         return true;
     }
+
     Mesh CreateWedgeMesh()
     {
         Mesh mesh = new Mesh();
@@ -171,23 +176,19 @@ public class AiSensor : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        Vector3 gizmoPos = transform.position + new Vector3(0, verticalOffset, 0);
         if (mesh)
         {
             Gizmos.color = meshColor;
-            Gizmos.DrawMesh(mesh, transform.position, transform.rotation);
+            Gizmos.DrawMesh(mesh, gizmoPos, transform.rotation);
         }
 
-        Gizmos.DrawWireSphere(transform.position, distance);
-        /*
-        for(int i=0; i<count;  i++)
-        {
-            Gizmos.DrawSphere(colliders[i].transform.position, 0.2f);
-        }
-        */
+        Gizmos.DrawWireSphere(gizmoPos, distance);
         Gizmos.color = Color.green;
-        foreach(var obj in Objects)
+        foreach (var obj in Objects)
         {
             Gizmos.DrawSphere(obj.transform.position, 0.5f);
         }
     }
+
 }

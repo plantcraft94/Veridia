@@ -39,7 +39,7 @@ public class AiMovement : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-       
+        patrolCenter = transform.position;
         updateTimer = updateRate;
         SetRandomPatrolPoint();
     }
