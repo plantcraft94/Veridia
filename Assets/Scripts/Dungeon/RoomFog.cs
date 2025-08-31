@@ -4,9 +4,14 @@ using PrimeTween;
 public class RoomFog : MonoBehaviour
 {
 	SpriteRenderer SR;
+	RoomStateManager RSM;
 	private void Awake()
 	{
 		SR = GetComponent<SpriteRenderer>();
+	}
+	private void Start()
+	{
+		RSM = GetComponent<RoomStateManager>();
 	}
 	private void OnTriggerEnter(Collider other)
 	{
@@ -19,7 +24,7 @@ public class RoomFog : MonoBehaviour
 	{
 		if(other.gameObject.CompareTag("Player"))
 		{
-			Tween.Alpha(SR, endValue: 1f, 0.2f, Ease.InOutSine);
+			Tween.Alpha(SR, endValue: 1f, 0.2f, Ease.InOutSine).OnComplete(() => RSM.DestroyEnemy());
 		}
 	}
 }

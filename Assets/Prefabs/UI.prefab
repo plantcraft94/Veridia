@@ -1462,9 +1462,10 @@ GameObject:
   m_Component:
   - component: {fileID: 41499076082206031}
   - component: {fileID: 1165334842032869186}
+  - component: {fileID: 6064893061001622713}
   - component: {fileID: 5489958751739411921}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Amount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1497,6 +1498,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2523555479277919844}
   m_CullTransparentMesh: 1
+--- !u!114 &6064893061001622713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2523555479277919844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c7b52207b037c14f83522283873eed8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sourceComponent: {fileID: 0}
+  varAmount: HealthPotAmount
 --- !u!114 &5489958751739411921
 MonoBehaviour:
   m_ObjectHideFlags: 0

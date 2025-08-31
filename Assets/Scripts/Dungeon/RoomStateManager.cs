@@ -26,19 +26,13 @@ public class RoomStateManager : MonoBehaviour
 	}
 	private void OnTriggerEnter(Collider other)
 	{
-		if (other.gameObject.CompareTag("Player"))
+		if (other.gameObject.CompareTag("Player") && State == RoomState.Challenge)
 		{
 			playerInside = true;
+			DungeonManager.Instance.IsInChallenge = true;
 			foreach (GameObject SpawnPoint in ChallengeSpawnPoint)
 			{
 				ObjectSpawn OSpawn = SpawnPoint.GetComponent<ObjectSpawn>();
-				if (OSpawn.CurrentSpawn != null)
-				{
-					if (OSpawn.CurrentSpawn.GetComponent<AiHealth>() != null)
-					{
-						ChallengeEnemy.Remove(OSpawn.CurrentSpawn);
-					}
-				}
 				OSpawn.Spawn();
 				if (OSpawn.CurrentSpawn != null)
 				{
@@ -53,9 +47,10 @@ public class RoomStateManager : MonoBehaviour
 	}
 	private void OnTriggerExit(Collider other)
 	{
-		if (other.gameObject.CompareTag("Player"))
+		if (other.gameObject.CompareTag("Player") && State == RoomState.Challenge)
 		{
 			playerInside = false;
+			DungeonManager.Instance.IsInChallenge = false;
 		}
 	}
 	public void ChallengeClear()
@@ -71,9 +66,24 @@ public class RoomStateManager : MonoBehaviour
 	public void OnEnemyDeath(GameObject Enemy)
 	{
 		ChallengeEnemy.Remove(Enemy);
-		if(ChallengeEnemy.Count <= 0)
+		if (ChallengeEnemy.Count <= 0 && DungeonManager.Instance.IsInChallenge && playerInside)
 		{
 			ChallengeClear();
+		}
+	}
+	public void DestroyEnemy()
+	{
+		foreach (GameObject SpawnPoint in ChallengeSpawnPoint)
+		{
+			ObjectSpawn OSpawn = SpawnPoint.GetComponent<ObjectSpawn>();
+			if (OSpawn.CurrentSpawn != null)
+			{
+				if (OSpawn.CurrentSpawn.GetComponent<AiHealth>() != null)
+				{
+					ChallengeEnemy.Remove(OSpawn.CurrentSpawn);
+					Destroy(OSpawn.CurrentSpawn);
+				}
+			}
 		}
 	}
 }
