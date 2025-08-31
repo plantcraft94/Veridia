@@ -121,7 +121,7 @@ GameObject:
   - component: {fileID: 1186028425496896284}
   - component: {fileID: 3544908317807926445}
   - component: {fileID: 1457446900732736654}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: CheckPoint
   m_TagString: Door
   m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
@@ -228,7 +228,7 @@ GameObject:
   - component: {fileID: 7662902656942776268}
   - component: {fileID: 3733561124253801941}
   - component: {fileID: 352243610789216797}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Border
   m_TagString: Door
   m_Icon: {fileID: 0}

@@ -16,5 +16,6 @@ public class EventSystemAccess : MonoBehaviour
 
 		eventSystem.SetSelectedGameObject(null);
 		eventSystem.SetSelectedGameObject(firstItemToSelect.gameObject);
+		firstItemToSelect.Select();
 	}
 }

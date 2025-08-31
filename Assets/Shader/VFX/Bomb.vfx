@@ -841,7 +841,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615069}
   - {fileID: 8926484042661615074}
   dataType: 0
-  capacity: 128
+  capacity: 200
   stripCapacity: 1
   particlePerStripCount: 32
   needsComputeBounds: 0
@@ -2159,7 +2159,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 100
+      m_SerializableObject: 200
     m_Space: -1
   m_Property:
     name: Count
@@ -2768,7 +2768,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 6
+      m_SerializableObject: 11
     m_Space: -1
   m_Property:
     name: 
@@ -3025,7 +3025,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 100
+      m_SerializableObject: 200
     m_Space: -1
   m_Property:
     name: Count
@@ -3603,7 +3603,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615312}
   - {fileID: 8926484042661615324}
   dataType: 0
-  capacity: 128
+  capacity: 200
   stripCapacity: 1
   particlePerStripCount: 32
   needsComputeBounds: 0

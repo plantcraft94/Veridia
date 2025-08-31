@@ -9,17 +9,18 @@ using Physics = UnityEngine.Physics;
 public class PlayerInteract : MonoBehaviour
 {
 	InputAction interactAction;
-	bool IsHolding = false;
+	public bool IsHolding = false;
 
 	public GameObject Interacter;
 
 	public bool isInChestRange;
-	bool isNearChest;
+	public bool Interactable;
 
 	ThrowableObject TO;
 
 	PlayerMovement PM;
 	public bool IsInteractWithDoor;
+	[SerializeField] GameObject InteractionPrompt;
 	private void Start()
 	{
 		interactAction = InputSystem.actions.FindAction("Interact");
@@ -28,6 +29,12 @@ public class PlayerInteract : MonoBehaviour
 	private void Update()
 	{
 		RotateBasedOnDirection(PM.PlayerFacingDirection);
+		if(GameManager.Instance.isInInv)
+		{
+			InteractionPrompt.SetActive(false);
+			return;
+		}
+		InteractionPrompt.SetActive(Interactable);
 		if (IsHolding && interactAction.WasPressedThisFrame())
 		{
 			TO.Grabbed = 2;
@@ -40,52 +47,52 @@ public class PlayerInteract : MonoBehaviour
 		RaycastHit hit;
 		if (Physics.Raycast(Interacter.transform.position, Interacter.transform.forward, out hit, 1f) && Interacter.activeSelf)
 		{
-			if (hit.collider.gameObject.GetComponent<ThrowableObject>() != null)
+			if(hit.collider.TryGetComponent<Chest>(out var chest))
 			{
+				Interactable = isInChestRange && !chest.isOpen;
+				if(interactAction.WasPressedThisFrame())
+				{
+					if(isInChestRange)
+					{
+						chest.Open();
+					}
+					else if(!isInChestRange)
+					{
+						Debug.Log("Cannot Open on this side :(");
+					}
+					
+				}
+			}
+			else if (hit.collider.gameObject.TryGetComponent<ThrowableObject>(out var throwable))
+			{
+				Interactable = true;
 				if (!IsHolding && interactAction.WasPressedThisFrame())
 				{
 					Interacter.SetActive(false);
-					TO = hit.collider.GetComponent<ThrowableObject>();
+					TO = throwable;
 					TO.Grabbed = 1;
 					IsHolding = true;
 				}
 			}
-			if(hit.collider.gameObject.CompareTag("Door"))
+			else if(hit.collider.gameObject.CompareTag("Door"))
 			{
+				Interactable = true;
 				IsInteractWithDoor = interactAction.WasPressedThisFrame();
 				if(IsInteractWithDoor)
 				{
-					hit.collider.gameObject.GetComponent<Door>().InteractWithThisDoor = true;
+					hit.collider.transform.parent.gameObject.GetComponent<Door>().InteractWithThisDoor = true;
 				}
 			}
-			isNearChest = hit.collider.CompareTag("Chest");
-			if(interactAction.WasPressedThisFrame() && isNearChest)
+			else 
 			{
-				if(isInChestRange)
-				{
-					hit.collider.gameObject.GetComponent<Chest>().Open();
-				}
-				else if(!isInChestRange)
-				{
-					Debug.Log("Cannot Open on this side :(");
-				}
-				
+				Interactable = false;
 			}
 		}
+		else
+		{
+			Interactable = false;
+		}
 	}
-	// private void OnTriggerStay(Collider other)
-	// {
-	// 	if (other.gameObject.GetComponent<ThrowableObject>() != null)
-	// 	{
-	// 		if (!IsHolding && interactAction.WasPressedThisFrame())
-	// 		{
-	// 			Interacter.SetActive(false);
-	// 			TO = other.GetComponent<ThrowableObject>();
-	// 			TO.Grabbed = 1;
-	// 			IsHolding = true;
-	// 		}
-	// 	}
-	// }
 	void RotateBasedOnDirection(Vector2 direction)
 	{
 		if (direction == Vector2.zero) return;
