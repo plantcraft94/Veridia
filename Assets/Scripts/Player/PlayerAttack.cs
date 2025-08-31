@@ -17,7 +17,7 @@ public class PlayerAttack : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if(SlashAction.WasPressedThisFrame() && !isSlashing)
+		if(SlashAction.WasPressedThisFrame() && !isSlashing && !Player.Instance.PI.IsHolding)
 		{
 			isSlashing = true;
 			SwordSlashEffect.SetActive(true);

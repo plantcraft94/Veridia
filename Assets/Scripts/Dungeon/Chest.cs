@@ -6,7 +6,7 @@ public class Chest : MonoBehaviour
 	[Tooltip("The item this chest contains")]
 	public ChestItem content;
 
-	[SerializeField] private bool isOpen = false;
+	[SerializeField] public bool isOpen = false;
 	Animator anim;
 	private void Start()
 	{
