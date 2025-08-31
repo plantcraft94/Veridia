@@ -197,7 +197,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -100417672, guid: e749680481e330d43a55b728028b9161, type: 3}
+  m_Sprite: {fileID: -820960709, guid: bb1cd9e74fa0b494aaeea5d63bade107, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -342,6 +342,7 @@ MonoBehaviour:
   angle: 30
   height: 0.6
   meshColor: {r: 1, g: 0, b: 0, a: 0.31764707}
+  verticalOffset: 0
   scanFrequency: 30
   layers:
     serializedVersion: 2
@@ -464,5 +465,5 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.4
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.30031365
+  m_Center: {x: 0, y: -0.099686325, z: 0}
