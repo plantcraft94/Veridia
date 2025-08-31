@@ -13,14 +13,14 @@ public class AiMovement : MonoBehaviour
     public float patrolPointReachedThreshold = 1f;
 
     [Header("Search Settings")]
-    public float searchDuration = 3f; // thời gian quay đầu tìm kiếm
-    public float rotationSpeed = 120f; // độ/quay mỗi giây
+    public float searchDuration = 3f; 
+    public float rotationSpeed = 120f; 
 
     private NavMeshAgent agent;
     private float updateTimer;
 
-    private enum State { Patrol, Chase, Search, Returning }
-    private State currentState = State.Patrol;
+    public enum State { Patrol, Chase, Search, Returning }
+    public State currentState = State.Patrol;
 
     private Vector3 currentPatrolTarget;
     private GameObject currentChaseTarget;
@@ -114,7 +114,7 @@ public class AiMovement : MonoBehaviour
                 isRotating = false;
                 hasStartedSearch = false;
                 hasSetReturnDestination = false;
-                currentState = State.Returning;
+                currentState = State.Patrol;
             }
 
         }

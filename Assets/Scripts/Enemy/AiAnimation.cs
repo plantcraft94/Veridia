@@ -4,15 +4,19 @@ using UnityEngine.AI;
 [RequireComponent(typeof(Animator))]
 public class AiAnimation : MonoBehaviour
 {
-    public Transform parentRoot; // Drag Parent vào đây (Slime root)
+    public Transform parentRoot; 
     private Animator anim;
     private NavMeshAgent agent;
     private Rigidbody rb;
 
-    // Animator Parameters
     public string paramMoveX = "MoveX";
     public string paramMoveY = "MoveY";
     public string paramSpeed = "Speed";
+
+    public string paramLastX = "LastMoveX";
+    public string paramLastY = "LastMoveY";
+
+    private Vector3 lastDir = Vector3.down;
 
     void Start()
     {
@@ -36,14 +40,18 @@ public class AiAnimation : MonoBehaviour
             velocity = rb.linearVelocity;
         }
 
-        // Chỉ quan tâm đến X/Z vì game top-down 2.5D
-        Vector3 flatVel = new Vector3(velocity.x, 0f, velocity.z);
+        Vector3 flatVel = new Vector3(velocity.x, 0, velocity.z);
         float speed = flatVel.magnitude;
         Vector3 dir = speed > 0.01f ? flatVel.normalized : Vector3.zero;
 
-        // Đẩy dữ liệu sang Animator
         anim.SetFloat(paramMoveX, dir.x);
         anim.SetFloat(paramMoveY, dir.z);
         anim.SetFloat(paramSpeed, speed);
+        if (speed > 0.01f)
+        {
+            lastDir = dir; 
+            anim.SetFloat(paramLastX, dir.x);
+            anim.SetFloat(paramLastY, dir.z);
+        }
     }
 }

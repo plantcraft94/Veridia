@@ -96,7 +96,7 @@ public class AiAttack : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Collision detected with: " + collision.collider.name);
+        //Debug.Log("Collision detected with: " + collision.collider.name);
         if (!hasDealtDamage && collision.collider.CompareTag("Player"))
         {
             PlayerResource playerRes = collision.collider.GetComponent<PlayerResource>();
