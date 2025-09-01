@@ -10,8 +10,10 @@ public class Door : MonoBehaviour
 		Boss
 	}
 	[SerializeField] DoorType Type;
+	TempDialogueBox tempDialogueBox;
 	private void Start()
 	{
+		tempDialogueBox = GameObject.FindGameObjectWithTag("UI").GetComponent<TempDialogueBox>();
 		anim = GetComponent<Animator>();
 		if(Type == DoorType.Lock || Type == DoorType.Boss)
 		{
@@ -50,7 +52,7 @@ public class Door : MonoBehaviour
 			}
 			else
 			{
-				Debug.Log("This door need a key to unlock");
+				tempDialogueBox.DisplayDialogue("This door need a key to unlock");
 			}
 		}
 		InteractWithThisDoor = false;
@@ -67,7 +69,7 @@ public class Door : MonoBehaviour
 			}
 			else
 			{
-				Debug.Log("This door need a boss key to unlock");
+				tempDialogueBox.DisplayDialogue("This door need a boss key to unlock");
 			}
 		}
 		InteractWithThisDoor = false;

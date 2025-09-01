@@ -19,7 +19,7 @@ public class Chest : MonoBehaviour
 	{
 		if (isOpen) return;
 
-		tempDialogueBox.DisplayDialogue($"You go a {content.GetName()}!");
+		tempDialogueBox.DisplayDialogue($"You got a {content.GetName()}!");
 
 
 		GiveItemToPlayer();

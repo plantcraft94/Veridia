@@ -29,7 +29,7 @@ public class PlayerInteract : MonoBehaviour
 	private void Update()
 	{
 		RotateBasedOnDirection(PM.PlayerFacingDirection);
-		if(GameManager.Instance.isInInv)
+		if(GameManager.Instance.isInInv || GameManager.Instance.isInMap || GameManager.Instance.isInDialogueBox)
 		{
 			InteractionPrompt.SetActive(false);
 			return;

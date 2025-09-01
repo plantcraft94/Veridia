@@ -67,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if (GameManager.Instance.isInInv)
+		if (GameManager.Instance.isInInv || GameManager.Instance.isInMap || GameManager.Instance.isInDialogueBox)
 		{
 			return;
 		}

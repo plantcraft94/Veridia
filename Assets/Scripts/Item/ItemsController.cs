@@ -103,7 +103,7 @@ public class ItemsController : MonoBehaviour
 			}
 			return;
 		}
-		if (GameManager.Instance.isInInv)
+		if (GameManager.Instance.isInInv || GameManager.Instance.isInMap || GameManager.Instance.isInDialogueBox)
 		{
 			return;
 		}

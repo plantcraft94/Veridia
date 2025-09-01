@@ -65,7 +65,6 @@ public class InputPromptManager : MonoBehaviour
 			else if (device is Keyboard || device is Mouse)
 			{
 				controlType = ControlType.Keyboard;
-				Debug.Log("Scheme = Keyboard&Mouse");
 			}
 		}
 		OnControlChange.Invoke();

@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -22,17 +23,30 @@ public class TempDialogueBox : MonoBehaviour
 			}
 		}
 	}
+	private void OnEnable()
+	{
+		Debug.Log("Dialogue show");
+	}
 	public void DisplayDialogue(string message)
 	{
-		
-		GameManager.Instance.isInDialogueBox = true;
+		StartCoroutine(Display(message));
+	}
+	IEnumerator Display(string message)
+	{
 		DialogueBox.SetActive(true);
 		TextBox.text = message;
+		yield return null;
+		GameManager.Instance.isInDialogueBox = true;
 	}
 	public void HideDialogue()
 	{
+		StartCoroutine(StopDisplay());
+	}
+	IEnumerator StopDisplay()
+	{
 		TextBox.text = "";
 		DialogueBox.SetActive(false);
-		GameManager.Instance.isInDialogueBox = true;
+		yield return null;
+		GameManager.Instance.isInDialogueBox = false;
 	}
 }
