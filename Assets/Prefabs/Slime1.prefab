@@ -242,10 +242,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f31b027a113ee664ebc335d62377fb18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentRoot: {fileID: 2713854715845685952}
+  parentRoot: {fileID: 0}
   paramMoveX: MoveX
   paramMoveY: MoveY
   paramSpeed: Speed
+  paramLastX: LastMoveX
+  paramLastY: LastMoveY
 --- !u!114 &8494717695402445350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -368,8 +370,9 @@ MonoBehaviour:
   patrolCenter: {x: 10.984502, y: 1.0000005, z: 7.5373054}
   patrolSize: {x: 5, y: 0, z: 5}
   patrolPointReachedThreshold: 1
-  searchDuration: 3
+  searchDuration: 6
   rotationSpeed: 120
+  currentState: 0
 --- !u!114 &293526099514421333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -434,10 +437,10 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: -1923039037
   m_Radius: 0.4
-  m_Speed: 4
+  m_Speed: 2
   m_Acceleration: 2
   avoidancePriority: 50
-  m_AngularSpeed: 180
+  m_AngularSpeed: 120
   m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1

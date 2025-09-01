@@ -18,6 +18,9 @@ public class AiAnimation : MonoBehaviour
 
     private Vector3 lastDir = Vector3.down;
 
+    private AiSensor sensor;
+
+
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -37,21 +40,34 @@ public class AiAnimation : MonoBehaviour
         }
         else if (rb != null)
         {
-            velocity = rb.linearVelocity;
+            velocity = rb.linearVelocity; 
         }
 
         Vector3 flatVel = new Vector3(velocity.x, 0, velocity.z);
         float speed = flatVel.magnitude;
-        Vector3 dir = speed > 0.01f ? flatVel.normalized : Vector3.zero;
 
+        Vector3 dir;
+        if (speed > 0.01f)
+        {
+            dir = flatVel.normalized; 
+            lastDir = dir;            
+        }
+        else
+        {
+            Vector3 lookDir = parentRoot.forward;
+            lookDir.y = 0;
+            if (lookDir.sqrMagnitude > 0.001f)
+                lastDir = lookDir.normalized;
+
+            dir = Vector3.zero;
+        }
+
+        // Set cho Animator
         anim.SetFloat(paramMoveX, dir.x);
         anim.SetFloat(paramMoveY, dir.z);
         anim.SetFloat(paramSpeed, speed);
-        if (speed > 0.01f)
-        {
-            lastDir = dir; 
-            anim.SetFloat(paramLastX, dir.x);
-            anim.SetFloat(paramLastY, dir.z);
-        }
+        anim.SetFloat(paramLastX, lastDir.x);
+        anim.SetFloat(paramLastY, lastDir.z);
     }
+
 }
