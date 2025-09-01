@@ -13,6 +13,14 @@ public class AmountDisplay : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		text.text = $"{Player.Instance.PR.GetType().GetField(varAmount).GetValue(Player.Instance.PR)}";
+		if (sourceComponent == null || string.IsNullOrEmpty(varAmount))
+            return;
+
+        var field = sourceComponent.GetType().GetField(varAmount);
+        if (field != null)
+        {
+            var value = field.GetValue(sourceComponent);
+            text.text = value.ToString();
+        }
 	}
 }

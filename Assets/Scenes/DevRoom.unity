@@ -919,6 +919,8 @@ MonoBehaviour:
     - Key: 5
       Value: 1
   isInInv: 0
+  isInMap: 0
+  isInDialogueBox: 0
 --- !u!4 &885959017
 Transform:
   m_ObjectHideFlags: 0
@@ -1146,6 +1148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemInventory: {fileID: 1044442160}
+  Map: {fileID: 0}
 --- !u!1 &936904915
 GameObject:
   m_ObjectHideFlags: 0
@@ -1198,8 +1201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60c1caa712c83814295b18117c4e6067, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: Normal
-  Description: Normal
+  itemData: {fileID: 0}
   ChangeElementTo: 1
 --- !u!114 &936904918
 MonoBehaviour:
@@ -1545,6 +1547,8 @@ MonoBehaviour:
       Value: {fileID: 21300000, guid: c44c073cfcd204446ab8536f73f30b79, type: 3}
     - Key: 2
       Value: {fileID: 21300000, guid: 43cb3f762b65d1d4c926a7e90e31df70, type: 3}
+  SpriteDungeonItem:
+    _serializedList: []
 --- !u!1 &1044442160
 GameObject:
   m_ObjectHideFlags: 0
@@ -2293,8 +2297,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60c1caa712c83814295b18117c4e6067, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: Normal
-  Description: Normal
+  itemData: {fileID: 0}
   ChangeElementTo: 0
 --- !u!1 &1521862520
 GameObject:
@@ -2577,8 +2580,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60c1caa712c83814295b18117c4e6067, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: Normal
-  Description: Normal
+  itemData: {fileID: 0}
   ChangeElementTo: 2
 --- !u!114 &1671762709
 MonoBehaviour:

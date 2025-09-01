@@ -583,9 +583,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac94e4a1346add44e87ad8d37c415c19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsHolding: 0
   Interacter: {fileID: 6950739087559353898}
   isInChestRange: 0
+  Interactable: 0
   IsInteractWithDoor: 0
+  InteractionPrompt: {fileID: 0}
 --- !u!114 &5698898533352583652
 MonoBehaviour:
   m_ObjectHideFlags: 0
