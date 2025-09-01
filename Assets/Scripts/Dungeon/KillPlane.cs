@@ -6,8 +6,17 @@ public class KillPlane : MonoBehaviour
 	{
 		if(other.CompareTag("Player"))
 		{
-			other.gameObject.GetComponent<PlayerResource>().DamageHealth(15f);
-			DungeonManager.Instance.TpPlayer(DungeonManager.Instance.CurrentCheckPointPos);
+			var phealth = other.gameObject.GetComponent<PlayerResource>();
+			phealth.DamageHealth(15f);
+			if(phealth.Health > 0)
+			{
+				DungeonManager.Instance.TpPlayer(DungeonManager.Instance.CurrentCheckPointPos);
+			}
+			else
+			{
+				DungeonManager.Instance.TpPlayer(DungeonManager.Instance.FirstCheckPoint.position);
+				phealth.AddHealth(phealth.MaxHealth*2);
+			}
 		}
 		else
 		{

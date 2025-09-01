@@ -15,7 +15,7 @@ public enum RoomState
 }
 public class DungeonManager : MonoBehaviour
 {
-	[SerializeField] Transform FirstCheckPoint;
+	public Transform FirstCheckPoint;
 	public static DungeonManager Instance { get; set; }
 	public Vector3 CurrentCheckPointPos;
 	GameObject PlayerGameObject;
@@ -40,6 +40,8 @@ public class DungeonManager : MonoBehaviour
 	}
 	public void PlayerDiedInDungeon()
 	{
+		CurrentCheckPointPos = FirstCheckPoint.position;
+		TpPlayer(CurrentCheckPointPos);
 		TpPlayer(FirstCheckPoint.position);
 	}
 	public void ObtainDungeonItem(DungeonItems item)
