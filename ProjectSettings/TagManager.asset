@@ -20,6 +20,7 @@ TagManager:
   - PlayerSword
   - EnemyArrow
   - Bomb
+  - UI
   layers:
   - Default
   - TransparentFX

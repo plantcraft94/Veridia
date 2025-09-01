@@ -8,16 +8,19 @@ public class Chest : MonoBehaviour
 
 	[SerializeField] public bool isOpen = false;
 	Animator anim;
+	TempDialogueBox tempDialogueBox;
 	private void Start()
 	{
 		anim = GetComponent<Animator>();
+		tempDialogueBox = GameObject.FindGameObjectWithTag("UI").GetComponent<TempDialogueBox>();
 	}
 
 	public void Open()
 	{
 		if (isOpen) return;
 
-		Debug.Log("Chest opened! Got: " + content.GetName());
+		tempDialogueBox.DisplayDialogue($"You go a {content.GetName()}!");
+
 
 		GiveItemToPlayer();
 

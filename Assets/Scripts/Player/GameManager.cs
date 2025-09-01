@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
 	CinemachineBasicMultiChannelPerlin amp;
 	
 	public bool isInInv = false;
+	public bool isInDialogueBox = false;
 	private void Awake()
 	{
 		if (Instance == null)

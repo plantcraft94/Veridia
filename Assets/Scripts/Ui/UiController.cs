@@ -8,13 +8,17 @@ public class UiController : MonoBehaviour
 	[Header("Inventory_Item")]
 	[SerializeField] GameObject ItemInventory;
 	InputAction OpenInv;
-	private void Start()	
+	private void Start()
 	{
 		OpenInv = InputSystem.actions.FindAction("OpenInventory");
 		Tween.Delay(0.005f, () => ItemInventory.SetActive(false));
 	}
 	private void Update()
 	{
+		if(GameManager.Instance.isInDialogueBox)
+		{
+			return;
+		}
 		if(!GameManager.Instance.isInInv && OpenInv.WasPressedThisFrame())
 		{
 			GameManager.Instance.isInInv = true;
