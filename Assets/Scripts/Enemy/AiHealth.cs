@@ -20,9 +20,12 @@ public class AiHealth : MonoBehaviour
     [Header("Damage Sources Allowed")]
     public List<string> allowedDamageTags = new List<string>() { "PlayerSword", "PlayerArrow", "Bomb" };
     public bool TakeDamageFromThrowable = true;
+
+    private Animator anim;
     private void Awake()
     {
         currentHealth = maxHealth;
+        anim = GetComponentInChildren<Animator>();
     }
 
     public void TakeDamage(float amount, GameObject damageSource)
@@ -32,7 +35,7 @@ public class AiHealth : MonoBehaviour
             string sourceTag = damageSource.tag;
             if (!allowedDamageTags.Contains(sourceTag))
             {
-                if(TakeDamageFromThrowable == false || damageSource.GetComponent<ThrowableObject>() == null)
+                if (TakeDamageFromThrowable == false || damageSource.GetComponent<ThrowableObject>() == null)
                 {
                     Debug.Log("nana");
                     return;
@@ -43,24 +46,30 @@ public class AiHealth : MonoBehaviour
         currentHealth -= amount;
         if (onDamage != null) onDamage.Invoke();
 
+        if (anim != null)
+        {
+            anim.SetTrigger("Hurt");
+        }
+
         if (currentHealth <= 0)
         {
             Die();
         }
     }
 
-    public void Heal(float amount)
-    {
-        currentHealth += amount;
-        if (currentHealth > maxHealth) currentHealth = maxHealth;
-    }
-
     public void Die()
     {
         DropItems();
 
+        if (anim != null)
+        {
+            anim.SetTrigger("Death");
+        }
+
         if (onDeath != null) onDeath.Invoke();
-        Destroy(gameObject);
+
+        
+        Destroy(gameObject, 1.0f);
     }
 
     private void DropItems()
