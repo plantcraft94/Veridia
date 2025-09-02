@@ -340,7 +340,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0417d21ab9f2d24d895b6e8017b8d82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 6
+  distance: 5
   angle: 30
   height: 0.6
   meshColor: {r: 1, g: 0, b: 0, a: 0.31764707}

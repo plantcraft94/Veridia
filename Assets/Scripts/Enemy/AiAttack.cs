@@ -4,6 +4,11 @@ using System.Collections;
 [RequireComponent(typeof(Rigidbody))]
 public class AiAttack : MonoBehaviour
 {
+    public enum AttackType { SlimeJump, GoblinSword }
+
+    [Header("Attack Type")]
+    public AttackType attackType = AttackType.SlimeJump;
+
     [Header("Attack Settings")]
     public float attackRange = 2f;
     public float lockTime = 2f;
@@ -16,6 +21,10 @@ public class AiAttack : MonoBehaviour
     public Transform groundCheck;
     public LayerMask groundLayer;
     public AiMovement aiMovement;
+    public Animator animator;
+
+    [Header("Goblin Sword Hitboxes")]
+    public Collider[] swordHitboxes;
 
     private Transform player;
     private Rigidbody rb;
@@ -31,12 +40,30 @@ public class AiAttack : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        player = GameObject.FindGameObjectWithTag("Player")?.transform;
+
         if (aiMovement == null)
             aiMovement = GetComponent<AiMovement>();
+        if (animator == null)
+            animator = GetComponentInChildren<Animator>();
     }
 
     void Update()
+    {
+        if (player == null) return;
+
+        if (attackType == AttackType.SlimeJump)
+        {
+            HandleSlimeAttack();
+        }
+        else if (attackType == AttackType.GoblinSword)
+        {
+            HandleGoblinAttack();
+        }
+    }
+
+    // ------------------- SLIME ATTACK -------------------
+    void HandleSlimeAttack()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, 0.25f, groundLayer);
 
@@ -52,7 +79,6 @@ public class AiAttack : MonoBehaviour
 
     IEnumerator ChargeAndJump()
     {
-        Debug.Log("ChargeAndJump started");
         isCharging = true;
         rb.linearVelocity = Vector3.zero;
         aiMovement.PauseMovement();
@@ -60,7 +86,6 @@ public class AiAttack : MonoBehaviour
         lockedTargetPos = player.position;
         yield return new WaitForSeconds(lockTime);
 
-        Debug.Log("Attempt jump");
         isJumping = true;
         hasDealtDamage = false;
         aiMovement.DisableAgent();
@@ -79,7 +104,6 @@ public class AiAttack : MonoBehaviour
         rb.AddForce(jumpVector, ForceMode.Impulse);
 
         yield return new WaitUntil(() => Physics.CheckSphere(groundCheck.position, 0.05f, groundLayer));
-
         yield return new WaitForSeconds(0.1f);
         rb.linearVelocity = Vector3.zero;
 
@@ -96,17 +120,58 @@ public class AiAttack : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        //Debug.Log("Collision detected with: " + collision.collider.name);
+        if (attackType != AttackType.SlimeJump) return;
+
         if (!hasDealtDamage && collision.collider.CompareTag("Player"))
         {
             PlayerResource playerRes = collision.collider.GetComponent<PlayerResource>();
             if (playerRes != null)
             {
-                Debug.Log("Dealing damage to player");
                 playerRes.DamageHealth(damage);
                 hasDealtDamage = true;
             }
         }
+    }
+
+    // ------------------- GOBLIN ATTACK -------------------
+    void HandleGoblinAttack()
+    {
+        if (Time.time < lastAttackTime + attackCooldown) return;
+
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        if (distanceToPlayer <= attackRange && aiMovement.isChasing)
+        {
+            aiMovement.PauseMovement();
+
+            Vector3 toPlayer = (player.position - transform.position).normalized;
+            animator.SetFloat("AttackX", toPlayer.x);
+            animator.SetFloat("AttackY", toPlayer.z);
+
+            animator.SetTrigger("Attack");
+
+            lastAttackTime = Time.time;
+            StartCoroutine(ResumeAfterAttack(0.8f));
+        }
+    }
+
+    IEnumerator ResumeAfterAttack(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        aiMovement.ResumeMovement();
+    }
+
+    public void EnableSwordHitbox(int index)
+    {
+        if (attackType != AttackType.GoblinSword) return;
+        if (index >= 0 && index < swordHitboxes.Length && swordHitboxes[index] != null)
+            swordHitboxes[index].enabled = true;
+    }
+
+    public void DisableSwordHitbox(int index)
+    {
+        if (attackType != AttackType.GoblinSword) return;
+        if (index >= 0 && index < swordHitboxes.Length && swordHitboxes[index] != null)
+            swordHitboxes[index].enabled = false;
     }
 
     void OnDrawGizmosSelected()
