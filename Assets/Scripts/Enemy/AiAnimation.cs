@@ -19,13 +19,13 @@ public class AiAnimation : MonoBehaviour
     private Vector3 lastDir = Vector3.down;
 
     private AiSensor sensor;
-
+    BossAttack bossAttack;
 
     void Start()
     {
         anim = GetComponent<Animator>();
         if (parentRoot == null) parentRoot = transform.parent;
-
+        bossAttack = parentRoot.GetComponent<BossAttack>();
         agent = parentRoot.GetComponent<NavMeshAgent>();
         rb = parentRoot.GetComponent<Rigidbody>();
     }
@@ -69,5 +69,8 @@ public class AiAnimation : MonoBehaviour
         anim.SetFloat(paramLastX, lastDir.x);
         anim.SetFloat(paramLastY, lastDir.z);
     }
-
+    public void doAttackShock()
+    {
+        bossAttack.DoShockwave();
+    }
 }
