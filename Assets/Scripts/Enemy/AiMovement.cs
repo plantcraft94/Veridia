@@ -13,8 +13,12 @@ public class AiMovement : MonoBehaviour
     public float patrolPointReachedThreshold = 1f;
 
     [Header("Search Settings")]
-    public float searchDuration = 3f; 
-    public float rotationSpeed = 120f; 
+    public float searchDuration = 3f;
+    public float rotationSpeed = 120f;
+
+    [Header("Forced State")]
+    public bool forceState = false;
+    public State forcedState = State.Patrol;
 
     private NavMeshAgent agent;
     private float updateTimer;
@@ -35,7 +39,6 @@ public class AiMovement : MonoBehaviour
 
     public bool isChasing => currentState == State.Chase;
 
-
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -47,11 +50,17 @@ public class AiMovement : MonoBehaviour
     void Update()
     {
         if (isPaused) return;
+
+        if (forceState)
+        {
+            HandleForcedState();
+            return;
+        }
+
         updateTimer -= Time.deltaTime;
         if (updateTimer <= 0)
         {
             updateTimer = updateRate;
-
             GameObject target = GetNearestTarget();
 
             if (target != null)
@@ -94,7 +103,6 @@ public class AiMovement : MonoBehaviour
                         }
                         break;
 
-
                     case State.Patrol:
                         if (!agent.pathPending && agent.remainingDistance < patrolPointReachedThreshold)
                         {
@@ -116,13 +124,45 @@ public class AiMovement : MonoBehaviour
                 hasSetReturnDestination = false;
                 currentState = State.Patrol;
             }
-
         }
-
 
         if (currentState == State.Chase && currentChaseTarget != null)
         {
             agent.SetDestination(currentChaseTarget.transform.position);
+        }
+    }
+
+    void HandleForcedState()
+    {
+        currentState = forcedState;
+
+        switch (forcedState)
+        {
+            case State.Patrol:
+                if (!agent.pathPending && agent.remainingDistance < patrolPointReachedThreshold)
+                {
+                    SetRandomPatrolPoint();
+                }
+                break;
+
+            case State.Chase:
+                if (sensor != null)
+                {
+                    GameObject target = GetNearestTarget();
+                    if (target != null)
+                    {
+                        agent.SetDestination(target.transform.position);
+                    }
+                }
+                break;
+
+            case State.Search:
+                transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
+                break;
+
+            case State.Returning:
+                agent.SetDestination(GetClosestPointInBounds(transform.position));
+                break;
         }
     }
 
@@ -144,7 +184,6 @@ public class AiMovement : MonoBehaviour
                 nearest = obj;
             }
         }
-
         return nearest;
     }
 

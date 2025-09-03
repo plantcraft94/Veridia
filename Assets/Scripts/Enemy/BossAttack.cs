@@ -24,12 +24,13 @@ public class BossAttack : MonoBehaviour
 
     Animator animator;
     Transform player;
+    public AiSensor sensor;
 
     void Start()
     {
         animator = GetComponentInChildren<Animator>();
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
-
+        sensor = GetComponent<AiSensor>();
         if (shockwaveParticle != null)
             shockwaveParticle.Stop();
     }
@@ -37,6 +38,11 @@ public class BossAttack : MonoBehaviour
     void Update()
     {
         if (player == null) return;
+        Debug.Log("sensor.Objects.Count");
+
+        bool canSeePlayer = sensor.Objects.Contains(player.gameObject);
+        if (!canSeePlayer) return;
+        Debug.Log("Can see player");
 
         float dist = Vector3.Distance(transform.position, player.position);
 
@@ -50,16 +56,16 @@ public class BossAttack : MonoBehaviour
         // Projectile Attack
         if (Time.time >= lastProjectileTime + projectileCooldown && dist <= projectileCastRange)
         {
-            // Có thể dùng animation event thay cho gọi trực tiếp
             ShootProjectile();
             lastProjectileTime = Time.time;
         }
     }
 
-    // Gọi từ Animation Event
     public void DoShockwave()
     {
         if (shockwaveParticle != null) shockwaveParticle.Play();
+
+
         StartCoroutine(DelayedShockwaveDamage());
     }
 
