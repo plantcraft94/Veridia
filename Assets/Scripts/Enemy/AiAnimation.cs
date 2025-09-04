@@ -20,10 +20,12 @@ public class AiAnimation : MonoBehaviour
 
     private AiSensor sensor;
     BossAttack bossAttack;
+    AiMovement aiMovement;
 
     void Start()
     {
         anim = GetComponent<Animator>();
+        aiMovement = GetComponentInParent<AiMovement>();
         if (parentRoot == null) parentRoot = transform.parent;
         bossAttack = parentRoot.GetComponent<BossAttack>();
         agent = parentRoot.GetComponent<NavMeshAgent>();
@@ -73,4 +75,13 @@ public class AiAnimation : MonoBehaviour
     {
         bossAttack.DoShockwave();
     }
+
+    public void PauseMovement()
+    {
+       aiMovement.PauseMovement();
+    }
+    public void ResumeMovement()
+    {
+        aiMovement.ResumeMovement();
+    }  
 }
