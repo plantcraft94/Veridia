@@ -38,11 +38,11 @@ public class BossAttack : MonoBehaviour
     void Update()
     {
         if (player == null) return;
-        Debug.Log("sensor.Objects.Count");
+        //Debug.Log("sensor.Objects.Count");
 
         bool canSeePlayer = sensor.Objects.Contains(player.gameObject);
         if (!canSeePlayer) return;
-        Debug.Log("Can see player");
+        //Debug.Log("Can see player");
 
         float dist = Vector3.Distance(transform.position, player.position);
 

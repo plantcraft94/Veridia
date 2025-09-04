@@ -16,15 +16,17 @@ public class AiMovement : MonoBehaviour
     public float searchDuration = 3f;
     public float rotationSpeed = 120f;
 
-    [Header("Forced State")]
-    public bool forceState = false;
-    public State forcedState = State.Patrol;
+    [Header("Flee Settings")]
+    public float fleeDistance = 5f;
 
     private NavMeshAgent agent;
     private float updateTimer;
 
     public enum State { Patrol, Chase, Search, Returning }
     public State currentState = State.Patrol;
+
+    public enum ChaseMode { Chase, Flee, None }
+    public ChaseMode chaseMode = ChaseMode.Chase;
 
     private Vector3 currentPatrolTarget;
     private GameObject currentChaseTarget;
@@ -51,16 +53,11 @@ public class AiMovement : MonoBehaviour
     {
         if (isPaused) return;
 
-        if (forceState)
-        {
-            HandleForcedState();
-            return;
-        }
-
         updateTimer -= Time.deltaTime;
         if (updateTimer <= 0)
         {
             updateTimer = updateRate;
+
             GameObject target = GetNearestTarget();
 
             if (target != null)
@@ -68,7 +65,6 @@ public class AiMovement : MonoBehaviour
                 currentChaseTarget = target;
                 lastSeenPosition = target.transform.position;
                 currentState = State.Chase;
-                agent.SetDestination(target.transform.position);
             }
             else
             {
@@ -128,41 +124,32 @@ public class AiMovement : MonoBehaviour
 
         if (currentState == State.Chase && currentChaseTarget != null)
         {
-            agent.SetDestination(currentChaseTarget.transform.position);
-        }
-    }
+            if (chaseMode == ChaseMode.Chase)
+            {
+                agent.SetDestination(currentChaseTarget.transform.position);
+            }
+            else if (chaseMode == ChaseMode.Flee)
+            {
+                float distToPlayer = Vector3.Distance(transform.position, currentChaseTarget.transform.position);
 
-    void HandleForcedState()
-    {
-        currentState = forcedState;
-
-        switch (forcedState)
-        {
-            case State.Patrol:
-                if (!agent.pathPending && agent.remainingDistance < patrolPointReachedThreshold)
+                if (distToPlayer <= fleeDistance)
                 {
-                    SetRandomPatrolPoint();
-                }
-                break;
+                    Vector3 dir = (transform.position - currentChaseTarget.transform.position).normalized;
+                    Vector3 fleeTarget = transform.position + dir * fleeDistance;
 
-            case State.Chase:
-                if (sensor != null)
-                {
-                    GameObject target = GetNearestTarget();
-                    if (target != null)
+                    if (NavMesh.SamplePosition(fleeTarget, out NavMeshHit hit, 2f, NavMesh.AllAreas))
                     {
-                        agent.SetDestination(target.transform.position);
+                        agent.SetDestination(hit.position);
                     }
                 }
-                break;
-
-            case State.Search:
-                transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
-                break;
-
-            case State.Returning:
-                agent.SetDestination(GetClosestPointInBounds(transform.position));
-                break;
+                else
+                {
+                    if (!agent.pathPending && agent.remainingDistance < patrolPointReachedThreshold)
+                    {
+                        SetRandomPatrolPoint();
+                    }
+                }
+            }
         }
     }
 
@@ -184,6 +171,7 @@ public class AiMovement : MonoBehaviour
                 nearest = obj;
             }
         }
+
         return nearest;
     }
 
@@ -223,7 +211,7 @@ public class AiMovement : MonoBehaviour
 
     public void PauseMovement()
     {
-        if (agent != null)
+        if (agent != null && agent.isOnNavMesh)
         {
             agent.isStopped = true;
             isPaused = true;
@@ -234,8 +222,19 @@ public class AiMovement : MonoBehaviour
     {
         if (agent != null)
         {
+            if (!agent.enabled)
+                agent.enabled = true;
             agent.isStopped = false;
             isPaused = false;
+
+            if (currentState == State.Chase && currentChaseTarget != null)
+            {
+                agent.SetDestination(currentChaseTarget.transform.position);
+            }
+            else if (currentState == State.Patrol)
+            {
+                SetRandomPatrolPoint();
+            }
         }
     }
 
@@ -243,6 +242,8 @@ public class AiMovement : MonoBehaviour
     {
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireCube(patrolCenter, patrolSize);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, fleeDistance);
     }
 
     public void DisableAgent()

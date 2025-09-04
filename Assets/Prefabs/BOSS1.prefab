@@ -336,13 +336,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7395531842707783552}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b0417d21ab9f2d24d895b6e8017b8d82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 5
-  angle: 100
+  distance: 15
+  angle: 180
   height: 0.6
   meshColor: {r: 1, g: 0, b: 0, a: 0.31764707}
   verticalOffset: -0.6
@@ -368,12 +368,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sensor: {fileID: 2308005450622864018}
   updateRate: 0.5
-  patrolCenter: {x: 10.984502, y: 1.0000005, z: 7.5373054}
-  patrolSize: {x: 5, y: 0, z: 5}
+  patrolCenter: {x: -22, y: 1.5, z: 10.84}
+  patrolSize: {x: 3.53, y: 0, z: 7.03}
   patrolPointReachedThreshold: 1
   searchDuration: 6
   rotationSpeed: 120
+  fleeDistance: 5
   currentState: 0
+  chaseMode: 1
 --- !u!114 &585529014516846538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -388,8 +390,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shockwaveDamage: 40
   shockwaveCooldown: 12
-  shockwaveCastRange: 2.5
-  shockwaveDamageDelay: 0.5
+  shockwaveCastRange: 4
+  shockwaveDamageDelay: 0.35
   knockbackForce: 10
   knockbackDuration: 1
   playerLayer:
@@ -399,7 +401,8 @@ MonoBehaviour:
   projectilePrefab: {fileID: 7458564200767833722, guid: 14dfd592f3ca9a3408b3d35c004ea0ec, type: 3}
   projectileCooldown: 5
   projectileSpeed: 3
-  projectileCastRange: 7
+  projectileCastRange: 13.88
+  sensor: {fileID: 0}
 --- !u!114 &7692214222544308936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -546,7 +549,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 198798914852134490, guid: 5cbc537826220e04592d5a41a0dd985f, type: 3}
       propertyPath: simulationSpeed
-      value: 0.6
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 198798914852134490, guid: 5cbc537826220e04592d5a41a0dd985f, type: 3}
       propertyPath: useUnscaledTime

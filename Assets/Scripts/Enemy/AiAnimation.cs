@@ -78,10 +78,14 @@ public class AiAnimation : MonoBehaviour
 
     public void PauseMovement()
     {
-       aiMovement.PauseMovement();
+        Debug.Log("PauseMovement");
+        aiMovement.PauseMovement();
+        //aiMovement.DisableAgent();
     }
     public void ResumeMovement()
     {
+        Debug.Log("ResumeMovement");
         aiMovement.ResumeMovement();
+        //aiMovement.EnableAgent();
     }  
 }
