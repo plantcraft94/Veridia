@@ -20,6 +20,7 @@ public class PlayerAttack : MonoBehaviour
 		if(SlashAction.WasPressedThisFrame() && !isSlashing && !Player.Instance.PI.IsHolding && !GameManager.Instance.isInInv && !GameManager.Instance.isInMap && !GameManager.Instance.isInDialogueBox)
 		{
 			isSlashing = true;
+			Player.Instance.AttackAnim();
 			SwordSlashEffect.SetActive(true);
 		}
 	}

@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
 	public PlayerResource PR;
 	public PlayerCommonInventory PCI;
 	public ItemsController IC;
+	public PlayerAttack PA;
 	private void Awake()
 	{
 		
@@ -28,6 +29,7 @@ public class Player : MonoBehaviour
 		PR = GetComponent<PlayerResource>();
 		PCI = GetComponent<PlayerCommonInventory>();
 		IC = GetComponent<ItemsController>();
+		PA = GetComponent<PlayerAttack>();
 	}
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 
@@ -52,13 +54,11 @@ public class Player : MonoBehaviour
 			anim.SetFloat("MoveX", PM.PlayerFacingDirection.x);
 			anim.SetFloat("MoveY", PM.PlayerFacingDirection.y);
 		}
-		anim.SetBool("IsMoving", PM.PlayerFacingDirection != Vector2.zero);
-		// TEST
-
-		
-		if(Input.GetKeyDown(KeyCode.X))
-		{
-			anim.SetTrigger("IsAttacking");
-		}
+		anim.SetBool("IsMoving", PM.Movement != Vector3.zero);
+		anim.SetBool("IsJumping", !PM.IsGrounded);
+	}
+	public void AttackAnim()
+	{
+		anim.SetTrigger("IsAttacking");
 	}
 }

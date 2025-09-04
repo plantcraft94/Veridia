@@ -372,7 +372,9 @@ MonoBehaviour:
   patrolPointReachedThreshold: 1
   searchDuration: 6
   rotationSpeed: 120
+  fleeDistance: 5
   currentState: 0
+  chaseMode: 0
 --- !u!114 &293526099514421333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -385,6 +387,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27dfd89f45e023a4699ca7fa74e42f5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackType: 0
   attackRange: 4
   lockTime: 1
   jumpForce: 80
@@ -398,6 +401,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   aiMovement: {fileID: 6383412464506627755}
+  animator: {fileID: 0}
+  swordHitboxes: []
 --- !u!114 &7692214222544308936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -418,8 +423,7 @@ MonoBehaviour:
   onDamage:
     m_PersistentCalls:
       m_Calls: []
-  dropPrefabs:
-  - {fileID: 2025082256546480044, guid: 2f5e825418a3da34ea1daae13a343da9, type: 3}
+  dropPrefabs: []
   minDrop: 1
   maxDrop: 2
   allowedDamageTags:

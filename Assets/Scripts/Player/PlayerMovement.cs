@@ -13,7 +13,7 @@ using Physics = UnityEngine.Physics;
 public class PlayerMovement : MonoBehaviour
 {
 	Rigidbody rb;
-	Vector3 Movement;
+	public Vector3 Movement;
 	[SerializeField] Transform GroundCheckObject;
 	[SerializeField] LayerMask GroundLayer;
 
@@ -50,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
 	public GameObject Interacter;
 	public UnityEvent Crash;
 	PlayerAttack playerAttack;
+	public bool IsGrounded { get; private set; }
 
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start()
@@ -81,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
 			rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
 			return;
 		}
-		bool IsGrounded = Physics.CheckBox(GroundCheckObject.position, new Vector3(0.5f, 0.1f, 0.5f), Quaternion.identity, GroundLayer);
+		IsGrounded = Physics.CheckBox(GroundCheckObject.position, new Vector3(0.5f, 0.1f, 0.5f), Quaternion.identity, GroundLayer);
 		isJumping = !IsGrounded;
 		Input();
 		Movement.Normalize();

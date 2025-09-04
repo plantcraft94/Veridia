@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemName: WingBoot
   itemDescription: A magical boots, hold BUTTONPROMPT to start running, you can also
-    jump higher !
+    break the Spike Block and  jump further while running !
   CustomInput: 1
   inputPrompt: {fileID: 4274978725619267709, guid: 052faaac586de48259a63d0c4782560b, type: 3}

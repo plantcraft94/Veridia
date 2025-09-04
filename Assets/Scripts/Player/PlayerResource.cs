@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,6 +13,7 @@ public class PlayerResource : MonoBehaviour
 	public int HealthPotAmount;
 	public int MaxHealthPotAmount;
 	public UnityEvent OnDeath;
+	bool IsInIFrame = false;
 
 	private void Start()
 	{
@@ -44,7 +46,10 @@ public class PlayerResource : MonoBehaviour
 	}
 	public void DamageHealth(float amount)
 	{
-		Health -= amount;
+		if(!IsInIFrame)
+		{
+			Health -= amount;
+		}
 		if(Health <= 0)
 		{
 			OnDeath.Invoke();
@@ -62,5 +67,11 @@ public class PlayerResource : MonoBehaviour
 		{
 			Magic = 0;
 		}
+	}
+	public IEnumerator IFrame()
+	{
+		IsInIFrame = true;
+		yield return new WaitForSeconds(0.5f);
+		IsInIFrame = false;
 	}
 }

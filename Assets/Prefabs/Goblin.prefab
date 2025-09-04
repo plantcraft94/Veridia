@@ -182,7 +182,9 @@ MonoBehaviour:
   patrolPointReachedThreshold: 1
   searchDuration: 3
   rotationSpeed: 120
+  fleeDistance: 5
   currentState: 0
+  chaseMode: 0
 --- !u!114 &4505342411411006678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,8 +237,7 @@ MonoBehaviour:
   onDamage:
     m_PersistentCalls:
       m_Calls: []
-  dropPrefabs:
-  - {fileID: 2025082256546480044, guid: 2f5e825418a3da34ea1daae13a343da9, type: 3}
+  dropPrefabs: []
   minDrop: 1
   maxDrop: 2
   allowedDamageTags:

@@ -426,8 +426,7 @@ MonoBehaviour:
   onDamage:
     m_PersistentCalls:
       m_Calls: []
-  dropPrefabs:
-  - {fileID: 2025082256546480044, guid: 2f5e825418a3da34ea1daae13a343da9, type: 3}
+  dropPrefabs: []
   minDrop: 1
   maxDrop: 2
   allowedDamageTags:
