@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 using System.Collections;
 
 public class BossAttack : MonoBehaviour
@@ -19,12 +20,17 @@ public class BossAttack : MonoBehaviour
     public float projectileSpeed = 6f;
     public float projectileCastRange = 12f;
 
+    [Header("Escape Settings After Shockwave")]
+    public Transform waypoint1;
+    public Transform waypoint2;
+    public float escapeSpeedMultiplier = 2f;
+
     private float lastShockwaveTime = -Mathf.Infinity;
     private float lastProjectileTime = -Mathf.Infinity;
 
     Animator animator;
     Transform player;
-    public AiSensor sensor;
+    AiSensor sensor;
 
     void Start()
     {
@@ -38,11 +44,9 @@ public class BossAttack : MonoBehaviour
     void Update()
     {
         if (player == null) return;
-        //Debug.Log("sensor.Objects.Count");
 
         bool canSeePlayer = sensor.Objects.Contains(player.gameObject);
         if (!canSeePlayer) return;
-        //Debug.Log("Can see player");
 
         float dist = Vector3.Distance(transform.position, player.position);
 
@@ -64,9 +68,9 @@ public class BossAttack : MonoBehaviour
     public void DoShockwave()
     {
         if (shockwaveParticle != null) shockwaveParticle.Play();
-
-
         StartCoroutine(DelayedShockwaveDamage());
+
+        StartCoroutine(EscapeAfterShockwave());
     }
 
     IEnumerator DelayedShockwaveDamage()
@@ -113,6 +117,40 @@ public class BossAttack : MonoBehaviour
         }
     }
 
+    IEnumerator EscapeAfterShockwave()
+    {
+        AiMovement aiMove = GetComponent<AiMovement>();
+        NavMeshAgent agent = GetComponent<NavMeshAgent>();
+        if (agent == null || waypoint1 == null || waypoint2 == null) yield break;
+
+        float dist1 = Vector3.Distance(transform.position, waypoint1.position);
+        float dist2 = Vector3.Distance(transform.position, waypoint2.position);
+        Transform targetWaypoint = (dist1 > dist2) ? waypoint1 : waypoint2;
+
+        float originalSpeed = agent.speed;
+
+        if (aiMove != null) aiMove.isOverridden = true;
+
+        agent.isStopped = false;
+        agent.ResetPath();
+        agent.speed = originalSpeed * escapeSpeedMultiplier;
+        agent.SetDestination(targetWaypoint.position);
+
+        while (agent.pathPending || agent.remainingDistance > 0.5f)
+        {
+            yield return null;
+        }
+
+        agent.speed = originalSpeed;
+
+        if (aiMove != null)
+        {
+            aiMove.isOverridden = false;
+            aiMove.ResumeMovement();
+        }
+    }
+
+
     public void ShootProjectile()
     {
         if (projectilePrefab == null || player == null) return;
@@ -131,5 +169,16 @@ public class BossAttack : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, shockwaveCastRange);
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, projectileCastRange);
+
+        if (waypoint1 != null)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawSphere(waypoint1.position, 0.5f);
+        }
+        if (waypoint2 != null)
+        {
+            Gizmos.color = Color.magenta;
+            Gizmos.DrawSphere(waypoint2.position, 0.5f);
+        }
     }
 }

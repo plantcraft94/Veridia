@@ -41,6 +41,9 @@ public class AiMovement : MonoBehaviour
 
     public bool isChasing => currentState == State.Chase;
 
+    public bool isOverridden = false;
+
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -51,7 +54,7 @@ public class AiMovement : MonoBehaviour
 
     void Update()
     {
-        if (isPaused) return;
+        if (isPaused || isOverridden) return;
 
         updateTimer -= Time.deltaTime;
         if (updateTimer <= 0)

@@ -376,6 +376,7 @@ MonoBehaviour:
   fleeDistance: 5
   currentState: 0
   chaseMode: 1
+  isOverridden: 0
 --- !u!114 &585529014516846538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -399,10 +400,12 @@ MonoBehaviour:
     m_Bits: 8
   shockwaveParticle: {fileID: 2667723836577117602}
   projectilePrefab: {fileID: 7458564200767833722, guid: 14dfd592f3ca9a3408b3d35c004ea0ec, type: 3}
-  projectileCooldown: 5
+  projectileCooldown: 4
   projectileSpeed: 3
   projectileCastRange: 13.88
-  sensor: {fileID: 0}
+  waypoint1: {fileID: 0}
+  waypoint2: {fileID: 0}
+  escapeSpeedMultiplier: 5
 --- !u!114 &7692214222544308936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -442,8 +445,8 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: -1923039037
   m_Radius: 0.4
-  m_Speed: 2
-  m_Acceleration: 2
+  m_Speed: 2.5
+  m_Acceleration: 10
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 1
