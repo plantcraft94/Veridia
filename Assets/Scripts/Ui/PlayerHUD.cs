@@ -14,9 +14,13 @@ public class PlayerHUD : MonoBehaviour
 	PlayerResource PR;
 	private void Start()
 	{
-		Health = HealthBar.transform.GetChild(0).GetComponent<Image>();
-		Magic = MagicBar.transform.GetChild(0).GetComponent<Image>();
-		PlayerGameObject = GameObject.FindGameObjectWithTag("Player");
+		Health = HealthBar.GetComponent<Image>();
+        Health.type = Image.Type.Filled;
+        Health.fillMethod = Image.FillMethod.Horizontal;
+        Magic = MagicBar.GetComponent<Image>();
+        Magic.type = Image.Type.Filled;
+        Magic.fillMethod = Image.FillMethod.Horizontal;
+        PlayerGameObject = GameObject.FindGameObjectWithTag("Player");
 		Icontroller = PlayerGameObject.GetComponent<ItemsController>();
 		PR = PlayerGameObject.GetComponent<PlayerResource>();
 	}
