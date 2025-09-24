@@ -11,6 +11,6 @@ public class ObjectSpawn : MonoBehaviour
 		{
 			Destroy(CurrentSpawn);
 		}
-		CurrentSpawn = Instantiate(SpawnObject, new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), Quaternion.identity);
+		CurrentSpawn = Instantiate(SpawnObject, new Vector3(transform.position.x, transform.position.y + 2f, transform.position.z), Quaternion.identity);
 	}
 }
