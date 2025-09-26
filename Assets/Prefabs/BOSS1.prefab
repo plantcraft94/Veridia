@@ -402,7 +402,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 7458564200767833722, guid: 14dfd592f3ca9a3408b3d35c004ea0ec, type: 3}
   projectileCooldown: 4
   projectileSpeed: 3
-  projectileCastRange: 13.88
+  projectileCastRange: 14
   waypoint1: {fileID: 0}
   waypoint2: {fileID: 0}
   escapeSpeedMultiplier: 5

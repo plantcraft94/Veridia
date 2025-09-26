@@ -21,6 +21,7 @@ TagManager:
   - EnemyArrow
   - Bomb
   - UI
+  - waypoint
   layers:
   - Default
   - TransparentFX

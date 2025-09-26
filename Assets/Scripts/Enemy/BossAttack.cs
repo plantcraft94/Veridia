@@ -39,7 +39,20 @@ public class BossAttack : MonoBehaviour
         sensor = GetComponent<AiSensor>();
         if (shockwaveParticle != null)
             shockwaveParticle.Stop();
+
+        if (waypoint1 == null || waypoint2 == null)
+        {
+            Transform room = transform.parent;
+            if (room != null)
+            {
+                Transform wp1 = room.Find("Waypoint1");
+                Transform wp2 = room.Find("Waypoint2");
+                waypoint1 = wp1;
+                waypoint2 = wp2;
+            }
+        }
     }
+
 
     void Update()
     {
