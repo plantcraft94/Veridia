@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(Animator))]
 public class AiAnimation : MonoBehaviour
 {
     public Transform parentRoot; 
