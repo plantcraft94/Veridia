@@ -277,8 +277,8 @@ GameObject:
   - component: {fileID: 7058054658389517433}
   - component: {fileID: 6769087158140669476}
   - component: {fileID: 167670673230985545}
+  - component: {fileID: 450542329907028126}
   - component: {fileID: 2126137263115493417}
-  - component: {fileID: 7496345309029471918}
   - component: {fileID: 5420924791898469894}
   - component: {fileID: 6153998816525087285}
   - component: {fileID: 7202322672560113521}
@@ -348,7 +348,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distance: 15
-  angle: 180
+  angle: 80
   height: 0.6
   meshColor: {r: 1, g: 0, b: 0, a: 0.31764707}
   verticalOffset: -0.6
@@ -360,6 +360,27 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   Objects: []
+--- !u!114 &450542329907028126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6827931417019689149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a2c34d58d5c27144875c4d791bb3c2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossController
+  currentState: 0
+  dashOffset: 3
+  dashSpeedMultiplier: 8
+  dashCooldown: 0
+  stunDuration: 4
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  wallCheckDistance: 2
 --- !u!114 &2126137263115493417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -367,7 +388,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6827931417019689149}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e11ed5d8c581e4345b9e021631d9384a, type: 3}
   m_Name: 
@@ -375,7 +396,7 @@ MonoBehaviour:
   sensor: {fileID: 167670673230985545}
   updateRate: 0.5
   patrolCenter: {x: -22, y: 1.5, z: 10.84}
-  patrolSize: {x: 3.53, y: 0, z: 7.03}
+  patrolSize: {x: 5, y: 0, z: 5}
   patrolPointReachedThreshold: 1
   searchDuration: 6
   rotationSpeed: 120
@@ -383,35 +404,6 @@ MonoBehaviour:
   currentState: 0
   chaseMode: 1
   isOverridden: 0
---- !u!114 &7496345309029471918
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6827931417019689149}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 878047ed290fc0448a6811145f578929, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shockwaveDamage: 40
-  shockwaveCooldown: 12
-  shockwaveCastRange: 4
-  shockwaveDamageDelay: 0.35
-  knockbackForce: 10
-  knockbackDuration: 1
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  shockwaveParticle: {fileID: 7332979114899435096}
-  projectilePrefab: {fileID: 7458564200767833722, guid: 14dfd592f3ca9a3408b3d35c004ea0ec, type: 3}
-  projectileCooldown: 4
-  projectileSpeed: 3
-  projectileCastRange: 14
-  waypoint1: {fileID: 0}
-  waypoint2: {fileID: 0}
-  escapeSpeedMultiplier: 5
 --- !u!114 &5420924791898469894
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -572,11 +564,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5cbc537826220e04592d5a41a0dd985f, type: 3}
---- !u!198 &7332979114899435096 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 198798914852134490, guid: 5cbc537826220e04592d5a41a0dd985f, type: 3}
-  m_PrefabInstance: {fileID: 7422423841375186946}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7426485470253310240 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4945707815571746, guid: 5cbc537826220e04592d5a41a0dd985f, type: 3}
