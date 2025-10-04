@@ -2,6 +2,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class Door : MonoBehaviour
 {
+	[SerializeField] Texture2D NormalDoor;
+	[SerializeField] Texture2D LockedDoor;
+	[SerializeField] Texture2D BossesDoor;
 	Animator anim;
 	public bool InteractWithThisDoor = false;
 	enum DoorType
@@ -14,6 +17,13 @@ public class Door : MonoBehaviour
 	}
 	[SerializeField] DoorType Type;
 	TempDialogueBox tempDialogueBox;
+	Renderer rend;
+	MaterialPropertyBlock mpb;
+	void Awake()
+	{
+		rend = transform.GetChild(1).gameObject.GetComponent<Renderer>();
+		mpb = new MaterialPropertyBlock();
+	}
 	private void Start()
 	{
 		tempDialogueBox = GameObject.FindGameObjectWithTag("UI").GetComponent<TempDialogueBox>();
@@ -22,6 +32,24 @@ public class Door : MonoBehaviour
 		{
 			CloseDoor();
 		}
+		switch (Type)
+		{
+			case DoorType.Normal:
+				mpb.SetTexture("_Texture", NormalDoor);
+				break;
+			case DoorType.Lock:
+				mpb.SetTexture("_Texture", LockedDoor);
+				break;
+			case DoorType.Boss:
+				mpb.SetTexture("_Texture", BossesDoor);
+				break;
+			case DoorType.Puzzle:
+				mpb.SetTexture("_Texture", NormalDoor);
+				break;
+			default:
+				break;
+		}
+		rend.SetPropertyBlock(mpb);
 	}
 	private void Update()
 	{
@@ -32,19 +60,24 @@ public class Door : MonoBehaviour
 		switch (Type)
 		{
 			case DoorType.Normal:
+				mpb.SetTexture("_Texture", NormalDoor);
 				break;
 			case DoorType.Lock:
+				mpb.SetTexture("_Texture", LockedDoor);
 				LockDoor();
 				break;
 			case DoorType.Boss:
+				mpb.SetTexture("_Texture", BossesDoor);
 				BossDoor();
 				break;
 			case DoorType.Puzzle:
+				mpb.SetTexture("_Texture", NormalDoor);
 				PuzzleDoor();
 				break;
 			default:
 				break;
 		}
+		rend.SetPropertyBlock(mpb);
 	}
 	void LockDoor()
 	{

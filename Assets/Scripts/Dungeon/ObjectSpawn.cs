@@ -15,7 +15,7 @@ public class ObjectSpawn : MonoBehaviour
 
         CurrentSpawn = Instantiate(
             SpawnObject,
-            transform.position + Vector3.up * 2f,
+            transform.position + Vector3.up * 0.5f,
             Quaternion.identity,
             transform
         );
