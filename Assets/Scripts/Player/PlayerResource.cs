@@ -1,4 +1,5 @@
 using System.Collections;
+using PrimeTween;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -14,6 +15,18 @@ public class PlayerResource : MonoBehaviour
 	public int MaxHealthPotAmount;
 	public UnityEvent OnDeath;
 	bool IsInIFrame = false;
+	SpriteRenderer sr;
+	Material mat;
+	[SerializeField] float opacity;
+
+	[SerializeField] TweenSettings<float> tweenSettings;
+
+	private void Awake()
+	{
+		sr = GetComponentInChildren<SpriteRenderer>();
+		mat = sr.material;
+		mat.SetColor("_Color", new Color(1.000f, 0.200f, 0.000f, 1.000f));
+	}
 
 	private void Start()
 	{
@@ -23,6 +36,7 @@ public class PlayerResource : MonoBehaviour
 	}
 	private void Update()
 	{
+		mat.SetFloat("_Opacity", opacity);
 		if(Magic > 100)
 		{
 			Magic = 100;
@@ -46,6 +60,7 @@ public class PlayerResource : MonoBehaviour
 	}
 	public void DamageHealth(float amount)
 	{
+		Tween.Custom(tweenSettings, onValueChange: newVal => opacity = newVal);
 		if(!IsInIFrame)
 		{
 			Health -= amount;
