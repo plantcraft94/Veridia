@@ -113,6 +113,7 @@ public class BossController : MonoBehaviour
         {
             if (IsHittingWall() && agent.remainingDistance < 2f)
             {
+	            GameManager.Instance.ShakeCamera();
                 Debug.Log("Boss hit the wall!");
                 StartCoroutine(DoStun());
                 break;

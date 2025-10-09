@@ -82,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
 			rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
 			return;
 		}
-		IsGrounded = Physics.CheckBox(GroundCheckObject.position, new Vector3(0.5f, 0.1f, 0.5f), Quaternion.identity, GroundLayer);
+		IsGrounded = Physics.CheckBox(GroundCheckObject.position, new Vector3(0.4f, 0.1f, 0.4f), Quaternion.identity, GroundLayer);
 		isJumping = !IsGrounded;
 		Input();
 		Movement.Normalize();
