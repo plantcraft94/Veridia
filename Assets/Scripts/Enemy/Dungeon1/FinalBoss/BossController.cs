@@ -11,6 +11,14 @@ public class BossController : MonoBehaviour
     private AiMovement aiMovement;
     private AiSensor sensor;
     private Transform player;
+    private AiHealth aiHealth;
+
+    [Header("Phase Settings")]
+    [Range(0.01f, 0.5f)]
+    public float phase2ThresholdRatio = 0.2f;
+    private bool isPhase2 = false;
+
+    public GameObject crystalParent;
 
     [Header("Dash Settings")]
     public float dashOffset = 3f;
@@ -18,7 +26,7 @@ public class BossController : MonoBehaviour
     public float dashCooldown = 5f;
     private float lastDashTime = -Mathf.Infinity;
     private bool isDashing = false;
-    private float lostPlayerTimer = 0f;
+    private bool hasDetectedPlayer = false;
 
     [Header("Stun Settings")]
     public float stunDuration = 2f;
@@ -32,11 +40,29 @@ public class BossController : MonoBehaviour
         aiMovement = GetComponent<AiMovement>();
         sensor = GetComponent<AiSensor>();
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
+        aiHealth = GetComponent<AiHealth>();
+
+        if (crystalParent != null)
+            crystalParent.SetActive(false);
+
+        if (aiHealth != null)
+        {
+            aiHealth.onDamage.AddListener(OnDamaged);
+            aiHealth.onDeath.AddListener(OnDeath);
+        }
     }
 
     void Update()
     {
         if (isStunned) return;
+
+        // Kiểm tra phase 2
+        if (!isPhase2 && aiHealth != null)
+        {
+            float ratio = aiHealth.currentHealth / Mathf.Max(1f, aiHealth.maxHealth);
+            if (ratio <= phase2ThresholdRatio)
+                EnterPhase2();
+        }
 
         switch (currentState)
         {
@@ -45,26 +71,15 @@ public class BossController : MonoBehaviour
                 break;
 
             case BossState.Attack:
-                if (!sensor.Objects.Contains(player.gameObject))
+                // Boss đã từng phát hiện player -> liên tục tấn công
+                if (hasDetectedPlayer && !isDashing && Time.time >= lastDashTime + dashCooldown)
                 {
-                    lostPlayerTimer += Time.deltaTime;
-                    if (lostPlayerTimer >= 2f)
-                    {
-                        aiMovement.enabled = true;
-                        lostPlayerTimer = 0f;
-                    }
-                }
-                else
-                {
-                    lostPlayerTimer = 0f;
-                    if (!isDashing && Time.time >= lastDashTime + dashCooldown)
-                    {
-                        StartCoroutine(DoDash());
-                    }
+                    StartCoroutine(DoDash());
                 }
                 break;
 
             case BossState.Special:
+                // Phase 2 behavior (crystals)
                 break;
 
             case BossState.Dead:
@@ -75,11 +90,48 @@ public class BossController : MonoBehaviour
 
     void CheckPlayerDetection()
     {
+        if (player == null || sensor == null) return;
+
         if (sensor.Objects.Contains(player.gameObject))
         {
+            hasDetectedPlayer = true; // chỉ cần thấy 1 lần
             currentState = BossState.Attack;
-            aiMovement.enabled = true;
+
+            if (!isPhase2)
+                aiMovement.enabled = true;
         }
+    }
+
+    // -----------------------------------
+    // Các hàm khác giữ nguyên
+    // -----------------------------------
+
+    void OnDamaged()
+    {
+        if (aiHealth == null) return;
+        float ratio = aiHealth.currentHealth / Mathf.Max(1f, aiHealth.maxHealth);
+        if (!isPhase2 && ratio <= phase2ThresholdRatio)
+            EnterPhase2();
+    }
+
+    void OnDeath()
+    {
+        currentState = BossState.Dead;
+        aiMovement.enabled = false;
+    }
+
+    void EnterPhase2()
+    {
+        isPhase2 = true;
+        currentState = BossState.Special;
+
+        if (aiMovement != null)
+            aiMovement.enabled = false;
+
+        if (crystalParent != null)
+            crystalParent.SetActive(true);
+
+        Debug.Log("[BossController] Entered Phase 2: crystals activated.");
     }
 
     IEnumerator DoDash()
@@ -89,14 +141,13 @@ public class BossController : MonoBehaviour
         isDashing = true;
         lastDashTime = Time.time;
 
-        aiMovement.enabled = false;
+        if (aiMovement != null)
+            aiMovement.enabled = false;
 
         var agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         Vector3 dir = (player.position - transform.position).normalized;
 
         float distToPlayer = Vector3.Distance(transform.position, player.position);
-
-        
         Vector3 dashTarget = transform.position + dir * (distToPlayer + dashOffset);
 
         if (UnityEngine.AI.NavMesh.SamplePosition(dashTarget, out var hit, 2f, UnityEngine.AI.NavMesh.AllAreas))
@@ -123,33 +174,34 @@ public class BossController : MonoBehaviour
         agent.speed = originalSpeed;
         isDashing = false;
 
-        if (!isStunned)
+        if (!isStunned && !isPhase2)
             aiMovement.enabled = true;
     }
-
 
     IEnumerator DoStun()
     {
         isStunned = true;
         isDashing = false;
 
+        GameManager.Instance.ShakeCamera();
         var agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
-        agent.isStopped = true;
-        aiMovement.enabled = false;
+        if (agent != null) agent.isStopped = true;
+        if (aiMovement != null) aiMovement.enabled = false;
 
-        // TODO: thêm animation Stun
         yield return new WaitForSeconds(stunDuration);
-        currentState = BossState.Idle;
-        agent.isStopped = false;
+
+        currentState = BossState.Attack; // sau khi stun xong, quay lại tấn công
+        if (agent != null) agent.isStopped = false;
         isStunned = false;
-        aiMovement.enabled = true;
+
+        if (!isPhase2 && aiMovement != null)
+            aiMovement.enabled = true;
     }
 
     bool IsHittingWall()
     {
         Vector3 origin = transform.position + Vector3.up;
         Vector3 dir = transform.forward * wallCheckDistance;
-
         Debug.DrawRay(origin, dir, Color.yellow);
         return Physics.Raycast(origin, transform.forward, wallCheckDistance, groundLayer);
     }
